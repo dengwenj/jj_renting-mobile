@@ -22,38 +22,37 @@ export default function HomeSwiper() {
     setflag(true)
   }
 
-  return (
-    <div>
-      {flag && (
-        <Carousel
-          autoplay={true}
-          infinite
-          dotActiveStyle={{
-            backgroundColor: '#21b979',
-          }}
-          dotStyle={{
-            backgroundColor: '#f2f2f2',
-          }}
-        >
-          {swiper.map((item) => (
-            <a
-              key={item.id}
-              href="javascript;"
-              style={{
-                display: 'inline-block',
-                width: '100%',
-                height: 212,
-              }}
-            >
-              <img
-                src={`http://localhost:8080${item.imgSrc}`}
-                alt=""
-                style={{ width: '100%', verticalAlign: 'top' }}
-              />
-            </a>
-          ))}
-        </Carousel>
-      )}
-    </div>
-  )
+  const carouselContent = () =>
+    flag && (
+      <Carousel
+        autoplay={true}
+        infinite
+        dotActiveStyle={{
+          backgroundColor: '#21b979',
+        }}
+        dotStyle={{
+          backgroundColor: '#f2f2f2',
+        }}
+      >
+        {swiper.map((item) => (
+          <a
+            key={item.id}
+            href="javascript;"
+            style={{
+              display: 'inline-block',
+              width: '100%',
+              height: 212,
+            }}
+          >
+            <img
+              src={`http://localhost:8080${item.imgSrc}`}
+              alt=""
+              style={{ width: '100%', verticalAlign: 'top' }}
+            />
+          </a>
+        ))}
+      </Carousel>
+    )
+
+  return <div>{carouselContent()}</div>
 }
