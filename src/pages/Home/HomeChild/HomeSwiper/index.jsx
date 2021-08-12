@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Carousel } from 'antd-mobile'
 
 // 网络请求
-import { getSwiper } from '../../../../api/home'
+import { getSwiper } from '@/api/home'
 
 export default function HomeSwiper() {
   const [swiper, setSwiper] = useState([])
