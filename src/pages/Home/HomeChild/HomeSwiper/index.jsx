@@ -17,42 +17,48 @@ export default function HomeSwiper() {
   }, [])
 
   const _getSwiper = async () => {
+    // 发送请求
     const res = await getSwiper()
     setSwiper(res.data.body)
     setflag(true)
   }
 
-  const carouselContent = () =>
-    flag && (
-      <Carousel
-        autoplay={true}
-        infinite
-        dotActiveStyle={{
-          backgroundColor: '#21b979',
-        }}
-        dotStyle={{
-          backgroundColor: '#f2f2f2',
-        }}
-      >
-        {swiper.map((item) => (
-          <a
-            key={item.id}
-            href="javascript;"
-            style={{
-              display: 'inline-block',
-              width: '100%',
-              height: 212,
-            }}
-          >
-            <img
-              src={`http://localhost:8080${item.imgSrc}`}
-              alt=""
-              style={{ width: '100%', verticalAlign: 'top' }}
-            />
-          </a>
-        ))}
-      </Carousel>
-    )
+  const carouselContent = () => (
+    <div style={{ height: 212 }}>
+      {flag ? (
+        <Carousel
+          autoplay={true}
+          infinite
+          dotActiveStyle={{
+            backgroundColor: '#21b979',
+          }}
+          dotStyle={{
+            backgroundColor: '#f2f2f2',
+          }}
+        >
+          {swiper.map((item) => (
+            <a
+              key={item.id}
+              href="javascript;"
+              style={{
+                display: 'inline-block',
+                width: '100%',
+                height: 212,
+              }}
+            >
+              <img
+                src={`http://localhost:8080${item.imgSrc}`}
+                alt=""
+                style={{ width: '100%', verticalAlign: 'top' }}
+              />
+            </a>
+          ))}
+        </Carousel>
+      ) : (
+        ''
+      )}
+    </div>
+  )
 
   return <div>{carouselContent()}</div>
 }

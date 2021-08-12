@@ -18,6 +18,17 @@ export default class LayOut extends Component {
         : this.props.location.pathname,
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // console.log(this.props.location.pathname)
+    // console.log('componentDidUpdate', prevProps, prevState)
+    // 说明我点到了其他地方去了
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      this.setState({
+        selectedTab: this.props.location.pathname,
+      })
+    }
+  }
+
   // tabbar.item 代码重构不要重复写 用遍历
   tabBarItems = () =>
     tabBarItem.map((item) => (
@@ -35,17 +46,18 @@ export default class LayOut extends Component {
     ))
 
   render() {
+    // console.log(this.props)
     return (
       <div className="layout">
         {/* 二级路由  二级路由也要从一级路由这里下来 先要一级路由在二级路由 所有上哪里的拦截器就进不到这里 */}
         {/* 子路由 因为我在父路由里面写的 pathname 是 / 所以这里的子路由可以这样写 /news*/}
         {/* 这个必须要包 Switch 如果不包的话就要往下面找 就会导致 layOut 组件那种情况 就是找到 news 路径了 还往下找，就又去重定向 /home 了 */}
         <Switch>
+          <Redirect exact from="/" to="/home" />
           <Route path="/home" component={Home} />
           <Route path="/findhouse" component={FindHouse} />
           <Route path="/news" component={News} />
           <Route path="/my" component={My} />
-          <Redirect to="/home" />
         </Switch>
 
         {/* tabbar */}

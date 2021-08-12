@@ -10,8 +10,9 @@ export default function App() {
       {/* 配置路由 */}
       {/* 一级路由 */}
       <Switch>
+        <Route exact path="/citylist" component={CityList} />
+        {/* 这个要写在后面 */}
         <Route path="/" component={LayOut} />
-        <Route path="/citylist" component={CityList} />
       </Switch>
     </BrowserRouter>
   )

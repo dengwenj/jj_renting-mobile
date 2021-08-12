@@ -39,11 +39,15 @@ function HomeNav(props) {
   // 返回值渲染到页面上
   const navsItem = () =>
     navs.map((item) => (
-      <Flex.Item key={item.id} onClick={() => props.history.push(item.path)}>
+      <Flex.Item key={item.id} onClick={navItemClick(item)}>
         <img src={item.img} alt="" />
         <h2>{item.title}</h2>
       </Flex.Item>
     ))
+
+  const navItemClick = (item) => () => {
+    props.history.push(item.path)
+  }
 
   return (
     <div className="nav">
