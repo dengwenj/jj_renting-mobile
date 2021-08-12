@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router-dom'
 import { TabBar } from 'antd-mobile'
 
 import Home from '../Home'
@@ -18,12 +18,16 @@ export default class LayOut extends Component {
     console.log(this.props.location.pathname)
     return (
       <div className="layout">
+        {/* 二级路由  二级路由也要从一级路由这里下来 先要一级路由在二级路由 所有上哪里的拦截器就进不到这里 */}
         {/* 子路由 因为我在父路由里面写的 pathname 是 / 所以这里的子路由可以这样写 /news*/}
-        {/* <Redirect exact from="/" to="/home" /> */}
-        <Route path="/home" component={Home} />
-        <Route path="/findhouse" component={FindHouse} />
-        <Route path="/news" component={News} />
-        <Route path="/my" component={My} />
+        {/* 这个必须要包 Switch 如果不包的话就要往下面找 就会导致 layOut 组件那种情况 就是找到 news 路径了 还往下找，就又去重定向 /home 了 */}
+        <Switch>
+          <Route path="/home" component={Home} />
+          <Route path="/findhouse" component={FindHouse} />
+          <Route path="/news" component={News} />
+          <Route path="/my" component={My} />
+          <Redirect to="/home" />
+        </Switch>
 
         {/* tabbar */}
         <TabBar tintColor="#21b979" barTintColor="white">
