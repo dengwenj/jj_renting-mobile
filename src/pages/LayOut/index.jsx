@@ -12,7 +12,10 @@ import './index.css'
 export default class LayOut extends Component {
   state = {
     // 默认选中的 TabBar 菜单项
-    selectedTab: this.props.location.pathname,
+    selectedTab:
+      this.props.location.pathname === '/'
+        ? '/home'
+        : this.props.location.pathname,
   }
 
   // tabbar.item 代码重构不要重复写 用遍历

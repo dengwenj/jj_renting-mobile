@@ -7,9 +7,4 @@ import './assets/fonts/iconfont.css'
 // 我们自己写的全局样式要放在组件库样式的后面 后面的样式会覆盖前面的样式
 import './index.css'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-)
+ReactDOM.render(<App />, document.getElementById('root'))

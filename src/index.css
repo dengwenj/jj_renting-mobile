@@ -9,5 +9,6 @@ body {
 * {
   padding: 0;
   margin: 0;
+  touch-action: pan-y;
   box-sizing: border-box;
 }
