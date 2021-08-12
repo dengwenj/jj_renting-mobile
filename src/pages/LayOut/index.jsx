@@ -6,6 +6,7 @@ import Home from '../Home'
 import FindHouse from '../FindHouse'
 import News from '../News'
 import My from '../My'
+import tabBarItem from '../../utils/tabBarItem'
 import './index.css'
 
 export default class LayOut extends Component {
@@ -14,8 +15,23 @@ export default class LayOut extends Component {
     selectedTab: this.props.location.pathname,
   }
 
+  // tabbar.item 代码重构不要重复写 用遍历
+  tabBarItems = () =>
+    tabBarItem.map((item) => (
+      <TabBar.Item
+        title={item.title}
+        key={item.path}
+        icon={<i className={`iconfont ${item.icon}`} />}
+        selectedIcon={<i className={`iconfont ${item.icon}`} />}
+        selected={this.state.selectedTab === item.path}
+        onPress={() => {
+          this.setState({ selectedTab: item.path })
+          this.props.history.push(item.path)
+        }}
+      />
+    ))
+
   render() {
-    console.log(this.props.location.pathname)
     return (
       <div className="layout">
         {/* 二级路由  二级路由也要从一级路由这里下来 先要一级路由在二级路由 所有上哪里的拦截器就进不到这里 */}
@@ -31,50 +47,8 @@ export default class LayOut extends Component {
 
         {/* tabbar */}
         <TabBar tintColor="#21b979" barTintColor="white">
-          <TabBar.Item
-            title="首页"
-            key="/home"
-            icon={<i className="iconfont icon-ind" />}
-            selectedIcon={<i className="iconfont icon-ind" />}
-            selected={this.state.selectedTab === '/home'}
-            onPress={() => {
-              this.setState({ selectedTab: '/home' })
-              this.props.history.push('/home')
-            }}
-          />
-          <TabBar.Item
-            icon={<i className="iconfont icon-findHouse" />}
-            selectedIcon={<i className="iconfont icon-findHouse" />}
-            title="找房"
-            key="/findHouse"
-            selected={this.state.selectedTab === '/findHouse'}
-            onPress={() => {
-              this.setState({ selectedTab: '/findHouse' })
-              this.props.history.push('/findhouse')
-            }}
-          />
-          <TabBar.Item
-            icon={<i className="iconfont icon-infom" />}
-            selectedIcon={<i className="iconfont icon-infom" />}
-            title="资讯"
-            key="news"
-            selected={this.state.selectedTab === '/news'}
-            onPress={() => {
-              this.setState({ selectedTab: '/news' })
-              this.props.history.push('/news')
-            }}
-          />
-          <TabBar.Item
-            icon={<i className="iconfont icon-my" />}
-            selectedIcon={<i className="iconfont icon-my" />}
-            title="我的"
-            key="/my"
-            selected={this.state.selectedTab === '/my'}
-            onPress={() => {
-              this.setState({ selectedTab: '/my' })
-              this.props.history.push('/my')
-            }}
-          />
+          {/* 这里调用他  先返回值是 map方法，map方法再返回值是数组 react里面数组会帮你遍历 数组里面就是每一个 tabbar.item*/}
+          {this.tabBarItems()}
         </TabBar>
       </div>
     )
