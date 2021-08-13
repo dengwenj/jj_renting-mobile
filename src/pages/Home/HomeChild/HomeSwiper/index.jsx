@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Carousel } from 'antd-mobile'
+import { withRouter } from 'react-router-dom'
+import { Carousel, Flex } from 'antd-mobile'
 
 // 网络请求
 import { getSwiper } from '@/api/home'
+import './index.scss'
+import '@assets/fonts/iconfont.css'
 
-export default function HomeSwiper() {
+function HomeSwiper(props) {
   const [swiper, setSwiper] = useState([])
   // 问题： 生命周期函数先渲染render—dom元素此时轮播图数据为零系统不轮播
   //  定义一个flag开关
@@ -24,7 +27,7 @@ export default function HomeSwiper() {
   }
 
   const carouselContent = () => (
-    <div style={{ height: 204 }}>
+    <div style={{ height: 204 }} className="swiper">
       {flag ? (
         <Carousel
           autoplay={true}
@@ -57,8 +60,26 @@ export default function HomeSwiper() {
       ) : (
         ''
       )}
+      {/* 上面的搜索 */}
+      <Flex className="con">
+        <div className="left">
+          <div className="dz" onClick={() => props.history.push('/citylist')}>
+            <span>上海</span>
+            <i className="iconfont icon-arrow"></i>
+          </div>
+          <div className="search" onClick={() => props.history.push('/search')}>
+            <i className="iconfont icon-seach"></i>
+            <span>请输入小区或地址</span>
+          </div>
+        </div>
+        <div className="right" onClick={() => props.history.push('/map')}>
+          <i className="iconfont icon-map"></i>
+        </div>
+      </Flex>
     </div>
   )
 
   return <div>{carouselContent()}</div>
 }
+
+export default withRouter(HomeSwiper)

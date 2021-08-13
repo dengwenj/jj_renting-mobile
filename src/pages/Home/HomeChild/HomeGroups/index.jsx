@@ -38,7 +38,7 @@ export default function HomeGroups() {
   return (
     <div className="home_groups">
       <div className="header">
-        <h4>租房小组</h4>
+        <h3>租房小组</h3>
         <span>更多</span>
       </div>
       <div>{fGroups()}</div>

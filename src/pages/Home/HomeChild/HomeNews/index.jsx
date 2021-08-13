@@ -42,7 +42,7 @@ export default function HomeNews() {
 
   return (
     <div className="news">
-      <h4 className="new">最新资讯</h4>
+      <h3 className="new">最新资讯</h3>
       {newsContent()}
     </div>
   )
