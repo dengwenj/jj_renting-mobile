@@ -60,7 +60,7 @@ function HomeSwiper(props) {
       ) : (
         ''
       )}
-      {/* 上面的搜索 */}
+      {/* 顶部导航 */}
       <Flex className="con">
         <div className="left">
           <div className="dz" onClick={() => props.history.push('/citylist')}>

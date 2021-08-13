@@ -3,6 +3,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import LayOut from './pages/LayOut'
 import CityList from './pages/CityList'
+import Search from './pages/Search'
+import Map from './pages/Map'
+import Rent from './pages/Rent'
 
 export default function App() {
   return (
@@ -10,6 +13,9 @@ export default function App() {
       {/* 配置路由 */}
       {/* 一级路由 */}
       <Switch>
+        <Route exact path="/search" component={Search} />
+        <Route exact path="/map" component={Map} />
+        <Route exact path="/rent" component={Rent} />
         <Route exact path="/citylist" component={CityList} />
         {/* 这个要写在后面 */}
         <Route path="/" component={LayOut} />
