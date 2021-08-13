@@ -7,7 +7,7 @@ import FindHouse from '../FindHouse'
 import News from '../News'
 import My from '../My'
 import tabBarItem from '../../utils/tabBarItem'
-import './index.css'
+import './index.scss'
 
 export default class LayOut extends Component {
   state = {
@@ -20,7 +20,7 @@ export default class LayOut extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     // console.log(this.props.location.pathname)
-    // console.log('componentDidUpdate', prevProps, prevState)
+    // console.log('componentDidUpdate', prevProps)
     // 说明我点到了其他地方去了
     if (prevProps.location.pathname !== this.props.location.pathname) {
       this.setState({
