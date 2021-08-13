@@ -24,7 +24,7 @@ export default function HomeSwiper() {
   }
 
   const carouselContent = () => (
-    <div style={{ height: 212 }}>
+    <div style={{ height: 204 }}>
       {flag ? (
         <Carousel
           autoplay={true}
@@ -43,7 +43,7 @@ export default function HomeSwiper() {
               style={{
                 display: 'inline-block',
                 width: '100%',
-                height: 212,
+                height: 204,
               }}
             >
               <img

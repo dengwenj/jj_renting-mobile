@@ -14,7 +14,6 @@ export default function HomeNews() {
   const _newNews = async () => {
     // 发送请求
     const res = await newNews()
-    console.log(res)
     setNews(res.data.body)
   }
 
@@ -43,7 +42,7 @@ export default function HomeNews() {
 
   return (
     <div className="news">
-      <h3 className="new">最新资讯</h3>
+      <h4 className="new">最新资讯</h4>
       {newsContent()}
     </div>
   )

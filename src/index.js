@@ -5,6 +5,7 @@ import App from './App'
 import 'antd-mobile/dist/antd-mobile.css'
 import './assets/fonts/iconfont.css'
 // 我们自己写的全局样式要放在组件库样式的后面 后面的样式会覆盖前面的样式
+import 'lib-flexible'
 import './index.scss'
 
 ReactDOM.render(<App />, document.getElementById('root'))
