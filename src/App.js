@@ -9,17 +9,19 @@ import Rent from './pages/Rent'
 
 export default function App() {
   return (
-    <BrowserRouter>
-      {/* 配置路由 */}
-      {/* 一级路由 */}
-      <Switch>
-        <Route exact path="/search" component={Search} />
-        <Route exact path="/map" component={Map} />
-        <Route exact path="/rent" component={Rent} />
-        <Route exact path="/citylist" component={CityList} />
-        {/* 这个要写在后面 */}
-        <Route path="/" component={LayOut} />
-      </Switch>
-    </BrowserRouter>
+    <div className="App">
+      <BrowserRouter>
+        {/* 配置路由 */}
+        {/* 一级路由 */}
+        <Switch>
+          <Route exact path="/search" component={Search} />
+          <Route exact path="/map" component={Map} />
+          <Route exact path="/rent" component={Rent} />
+          <Route exact path="/citylist" component={CityList} />
+          {/* 这个要写在后面 */}
+          <Route path="/" component={LayOut} />
+        </Switch>
+      </BrowserRouter>
+    </div>
   )
 }

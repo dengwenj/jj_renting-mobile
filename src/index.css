@@ -4,6 +4,8 @@ body {
   font-family: 'Microsoft YaHei';
   color: #333;
   background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
 
 * {
@@ -11,4 +13,11 @@ body {
   margin: 0;
   touch-action: pan-y;
   box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+.App {
+  height: 100%;
 }
