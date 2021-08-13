@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { NavBar } from 'antd-mobile'
-import { getCityList } from '@api/area'
+import { getCityList, getHotCity } from '@api/area'
 import './index.scss'
 import '@assets/fonts/iconfont.css'
 
@@ -34,7 +34,13 @@ export default class CityList extends Component {
     const res = await getCityList()
     // 这里是整理数据
     const { cityList, cityIndex } = this.cityData(res.data.body)
-    console.log(cityList, cityIndex)
+
+    // 获取热门城市数据
+    const res1 = await getHotCity()
+    // 将数据添加到 cityList 中
+    cityList['hot'] = res1.data.body
+    // 将索引添加到 cityIndex 中
+    cityIndex.unshift('hot')
   }
 
   render() {

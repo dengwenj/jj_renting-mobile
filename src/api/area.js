@@ -19,3 +19,11 @@ export const getCityList = () => {
     },
   })
 }
+
+// 获取热门城市数据
+export const getHotCity = () => {
+  return request({
+    method: 'GET',
+    url: '/area/hot',
+  })
+}
