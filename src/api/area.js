@@ -8,3 +8,14 @@ export const cityInfo = (params) => {
     params,
   })
 }
+
+// 获取城市列表数据
+export const getCityList = () => {
+  return request({
+    method: 'GET',
+    url: '/area/city',
+    params: {
+      level: 1,
+    },
+  })
+}
