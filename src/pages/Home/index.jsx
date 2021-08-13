@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
-import { cityInfo } from '@api/area'
 import HomeSwiper from './HomeChild/HomeSwiper'
 import HomeNav from './HomeChild/HomeNav'
 import HomeGroups from './HomeChild/HomeGroups'
 import HomeNews from './HomeChild/HomeNews'
+import getCurrentCity from '@utils/currentCity'
 
 export default class Home extends Component {
   state = { cityInfo: '上海' }
 
   // 挂载完毕调用的生命周期钩子
   componentDidMount() {
-    // 通过 IP 定位 获取到当前城市的名称
-    const currentCity = new window.BMapGL.LocalCity()
-    currentCity.get(async (res) => {
-      const res1 = await cityInfo(res)
-      this.setState({
-        cityInfo: res1.data.body.label,
-      })
+    // 调用就返回了当前城市 在 utils 里面封装了 直接调用就行了 返回的是 Promise
+    this._getCurrentCity()
+  }
+
+  _getCurrentCity = async () => {
+    const res = await getCurrentCity()
+    this.setState({
+      cityInfo: res.label,
     })
   }
 

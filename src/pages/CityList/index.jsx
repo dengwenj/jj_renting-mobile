@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { NavBar } from 'antd-mobile'
 import { getCityList, getHotCity } from '@api/area'
+import getCurrentCity from '@utils/currentCity'
 import './index.scss'
 import '@assets/fonts/iconfont.css'
 
@@ -41,6 +42,12 @@ export default class CityList extends Component {
     cityList['hot'] = res1.data.body
     // 将索引添加到 cityIndex 中
     cityIndex.unshift('hot')
+
+    // 获取当前定位城市数据，并添加到现有数据列表中
+    const res2 = await getCurrentCity()
+    cityList['currentCity'] = [res2]
+    cityIndex.unshift('currentCity')
+    // console.log(cityList, cityIndex)
   }
 
   render() {
