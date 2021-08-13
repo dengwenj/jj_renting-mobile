@@ -18,3 +18,14 @@ export const rentingGroups = () => {
     },
   })
 }
+
+// 最新资讯
+export const newNews = () => {
+  return request({
+    method: 'GET',
+    url: '/home/news',
+    params: {
+      area: 'AREA|88cff55c-aaa4-e2e0',
+    },
+  })
+}
