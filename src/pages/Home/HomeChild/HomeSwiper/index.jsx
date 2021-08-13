@@ -8,6 +8,8 @@ import './index.scss'
 import '@assets/fonts/iconfont.css'
 
 function HomeSwiper(props) {
+  const { cityInfo } = props
+
   const [swiper, setSwiper] = useState([])
   // 问题： 生命周期函数先渲染render—dom元素此时轮播图数据为零系统不轮播
   //  定义一个flag开关
@@ -64,7 +66,7 @@ function HomeSwiper(props) {
       <Flex className="con">
         <div className="left">
           <div className="dz" onClick={() => props.history.push('/citylist')}>
-            <span>上海</span>
+            <span>{cityInfo}</span>
             <i className="iconfont icon-arrow"></i>
           </div>
           <div className="search" onClick={() => props.history.push('/search')}>
