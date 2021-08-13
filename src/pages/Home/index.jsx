@@ -7,6 +7,7 @@ import HomeNews from './HomeChild/HomeNews'
 
 export default class Home extends Component {
   state = { cityInfo: '上海' }
+
   // 挂载完毕调用的生命周期钩子
   componentDidMount() {
     // 通过 IP 定位 获取到当前城市的名称
