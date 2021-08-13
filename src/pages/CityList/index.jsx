@@ -45,8 +45,8 @@ export default class CityList extends Component {
 
     // 获取当前定位城市数据，并添加到现有数据列表中
     const res2 = await getCurrentCity()
-    cityList['currentCity'] = [res2]
-    cityIndex.unshift('currentCity')
+    cityList['#'] = [res2]
+    cityIndex.unshift('#')
     // console.log(cityList, cityIndex)
   }
 
