@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { NavBar } from 'antd-mobile'
+import { NavBar, Toast } from 'antd-mobile'
 import { List, AutoSizer } from 'react-virtualized'
 import { getCityList, getHotCity } from '@api/area'
 import getCurrentCity from '@utils/currentCity'
+import { setItem } from '@utils/storage'
 import './index.scss'
 import '@assets/fonts/iconfont.css'
 
@@ -16,6 +17,9 @@ const indexData = (letter) => {
       return letter.toUpperCase()
   }
 }
+
+// 只有北上广深才有房源
+const bsgs = ['北京', '上海', '广州', '深圳']
 
 export default class CityList extends Component {
   state = {
@@ -91,7 +95,11 @@ export default class CityList extends Component {
       <div key={key} style={style} className="city">
         <div className="title">{indexData(letter)}</div>
         {city.map((item) => (
-          <div className="name" key={item.value}>
+          <div
+            className="name"
+            key={item.value}
+            onClick={() => this.cityClick(item)}
+          >
             {item.label}
           </div>
         ))}
@@ -134,8 +142,24 @@ export default class CityList extends Component {
   ringhtIndexClick = (index) => {
     return () => {
       // 调用 List 实例方法 这个方法可以滚动到相应的索引
+      this.setState({
+        active: index,
+      })
       this.listRef.scrollToRow(index)
     }
+  }
+
+  // 点击城市
+  cityClick = (item) => {
+    console.log(item)
+    if (bsgs.indexOf(item.label) !== -1) {
+      // 不等于 -1 说明有
+      setItem('jjzf', { label: item.label, value: item.value })
+      this.props.history.goBack()
+      return
+    }
+    // 不是北上广深就提示用户占无房源
+    Toast.info('占无该城市房源', 2, null, false)
   }
 
   render() {
