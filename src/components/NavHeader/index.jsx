@@ -1,5 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import { NavBar } from 'antd-mobile'
 import './index.scss'
 
@@ -18,4 +19,11 @@ function NavHeader(props) {
     </NavBar>
   )
 }
+
+// 给组件添加 props 校验
+NavHeader.propTypes = {
+  children: PropTypes.string.isRequired,
+  onLeftClick: PropTypes.func,
+}
+
 export default withRouter(NavHeader)
