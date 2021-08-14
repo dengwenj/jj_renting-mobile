@@ -6,26 +6,23 @@ import getCurrentCity from '@utils/currentCity'
 import './index.scss'
 import '@assets/fonts/iconfont.css'
 
-// 列表数据的数据源
-const list = Array(100).fill('react-virtualized')
-
-// 渲染每一行数据的渲染函数
-// 函数的返回值就表示最终渲染在页面中的内容
-function rowRenderer({
-  key, //唯一的 key 值
-  index, // 索引号
-  isScrolling, // 当前项是否正在滚动中
-  isVisible, // 当前项在 list 中是可见的
-  style, // 指定每一行的位置 样式
-}) {
-  return (
-    <div key={key} style={style}>
-      {list[index]} {isScrolling + ''} {isVisible + ''}
-    </div>
-  )
+const indexData = (letter) => {
+  switch (letter) {
+    case '#':
+      return '定位城市'
+    case 'hot':
+      return '热门城市'
+    default:
+      return letter.toUpperCase()
+  }
 }
 
 export default class CityList extends Component {
+  state = {
+    cityList: {},
+    cityIndex: [],
+  }
+
   // 加载完毕调用的生命周期钩子
   componentDidMount() {
     this._getCityList()
@@ -67,7 +64,45 @@ export default class CityList extends Component {
     const res2 = await getCurrentCity()
     cityList['#'] = [res2]
     cityIndex.unshift('#')
-    // console.log(cityList, cityIndex)
+    this.setState({
+      cityList,
+      cityIndex,
+    })
+  }
+
+  // 渲染每一行数据的渲染函数
+  // 函数的返回值就表示最终渲染在页面中的内容
+  rowRenderer = ({
+    key, //唯一的 key 值
+    index, // 索引号
+    isScrolling, // 当前项是否正在滚动中
+    isVisible, // 当前项在 list 中是可见的
+    style, // 指定每一行的位置 样式
+  }) => {
+    const { cityIndex, cityList } = this.state
+    const letter = cityIndex[index]
+    const city = cityList[letter]
+    return (
+      <div key={key} style={style} className="city">
+        <div className="title">{indexData(letter)}</div>
+        {city.map((item) => (
+          <div className="name" key={item.value}>
+            {item.label}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  // 创建动态计算每一行高度的方法
+  getRowHeight = ({ index }) => {
+    const { cityIndex, cityList } = this.state
+    const TITLE_HEIGHT = 36
+    const NAME_HEIGHT = 50
+    // 索引标题高度 + 城市数量 * 城市名称的高度
+    // 城市数量
+    const cityLength = cityList[cityIndex[index]].length
+    return TITLE_HEIGHT + cityLength * NAME_HEIGHT
   }
 
   render() {
@@ -87,9 +122,9 @@ export default class CityList extends Component {
             <List
               width={width}
               height={height}
-              rowCount={list.length}
-              rowHeight={20}
-              rowRenderer={rowRenderer}
+              rowCount={this.state.cityIndex.length}
+              rowHeight={this.getRowHeight}
+              rowRenderer={this.rowRenderer}
             />
           )}
         </AutoSizer>
