@@ -52,7 +52,6 @@ export default class CityList extends Component {
     const res = await getCityList()
     // 这里是整理数据
     const { cityList, cityIndex } = this.cityData(res.data.body)
-
     // 获取热门城市数据
     const res1 = await getHotCity()
     // 将数据添加到 cityList 中
@@ -110,10 +109,19 @@ export default class CityList extends Component {
   ringhtIndexList = () => {
     const { cityIndex, active } = this.state
     return cityIndex.map((item, index) => (
-      <li className={`right_index ${active === index ? 'active' : ''}`}>
+      <li
+        className={`right_index ${active === index ? 'active' : ''}`}
+        key={item}
+      >
         {item === 'hot' ? '热' : item.toUpperCase()}
       </li>
     ))
+  }
+
+  // 滚动城市列表让索引高亮
+  onRowsRendered = ({ startIndex }) => {
+    // 判断 如果当前的这个索引不等于状态中的索引了就更新
+    if (startIndex !== this.state.active) this.setState({ active: startIndex })
   }
 
   render() {
@@ -136,6 +144,7 @@ export default class CityList extends Component {
               rowCount={this.state.cityIndex.length}
               rowHeight={this.getRowHeight}
               rowRenderer={this.rowRenderer}
+              onRowsRendered={this.onRowsRendered}
             />
           )}
         </AutoSizer>
