@@ -75,7 +75,6 @@ export default class CityList extends Component {
     this.setState({
       cityList,
       cityIndex,
-      active: 0,
     })
   }
 
@@ -151,7 +150,6 @@ export default class CityList extends Component {
 
   // 点击城市
   cityClick = (item) => {
-    console.log(item)
     if (bsgs.indexOf(item.label) !== -1) {
       // 不等于 -1 说明有
       setItem('jjzf', { label: item.label, value: item.value })

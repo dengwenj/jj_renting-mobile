@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+
 //导入 antd-mobile 样式
 import 'antd-mobile/dist/antd-mobile.css'
 import './assets/fonts/iconfont.css'
@@ -9,5 +9,7 @@ import './assets/fonts/iconfont.css'
 import 'lib-flexible'
 import 'react-virtualized/styles.css'
 import './index.css'
+//应该将组件的导入放在样式导入后面，从而避免样式覆盖的问题
+import App from './App'
 
 ReactDOM.render(<App />, document.getElementById('root'))
