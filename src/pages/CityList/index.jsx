@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { NavBar, Toast } from 'antd-mobile'
+import { Toast } from 'antd-mobile'
 import { List, AutoSizer } from 'react-virtualized'
 import { getCityList, getHotCity } from '@api/area'
 import getCurrentCity from '@utils/currentCity'
 import { setItem } from '@utils/storage'
+import NavHeader from '@components/NavHeader'
 import './index.scss'
 import '@assets/fonts/iconfont.css'
 
@@ -69,7 +70,7 @@ export default class CityList extends Component {
     cityIndex.unshift('hot')
 
     // 获取当前定位城市数据，并添加到现有数据列表中
-    const res2 = await getCurrentCity()
+    const res2 = await getCurrentCity() // utils 里面的
     cityList['#'] = [res2]
     cityIndex.unshift('#')
     this.setState({
@@ -163,14 +164,9 @@ export default class CityList extends Component {
   render() {
     return (
       <div className="cityList">
-        <NavBar
-          className="navbar"
-          mode="light"
-          icon={<i className="iconfont icon-back" />}
-          onLeftClick={() => this.props.history.goBack()}
-        >
-          城市选择
-        </NavBar>
+        {/* 顶部导航 */}
+        <NavHeader> 城市选择</NavHeader>
+
         {/* 城市列表 */}
         <AutoSizer className="list">
           {({ width, height }) => (
@@ -186,6 +182,7 @@ export default class CityList extends Component {
             />
           )}
         </AutoSizer>
+
         {/* 右侧索引列表 */}
         <ul className="right">{this.ringhtIndexList()}</ul>
       </div>
