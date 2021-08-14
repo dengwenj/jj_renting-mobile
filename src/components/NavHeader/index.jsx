@@ -2,7 +2,8 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { NavBar } from 'antd-mobile'
-import './index.scss'
+// import './index.scss'
+import styles from './index.module.css'
 
 function NavHeader(props) {
   // 默认点击行为 如果传了的话就按自己点击行为来做
@@ -10,7 +11,7 @@ function NavHeader(props) {
 
   return (
     <NavBar
-      className="navbar"
+      className={styles.navBar}
       mode="light"
       icon={<i className="iconfont icon-back" />}
       onLeftClick={props.onLeftClick || goBack}

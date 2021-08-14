@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import NavHeader from '@components/NavHeader'
-import './index.scss'
+import styles from './index.module.css'
 
 export default class Map extends Component {
   // 挂载完毕生命周期调用的钩子
@@ -15,10 +15,10 @@ export default class Map extends Component {
   }
   render() {
     return (
-      <div className="map">
-        <NavHeader className="nav_header">地图找房</NavHeader>
+      <div className={styles.map}>
+        <NavHeader>地图找房</NavHeader>
         {/* 创建地图容器元素 */}
-        <div id="container"></div>
+        <div id="container" className={styles.container}></div>
       </div>
     )
   }

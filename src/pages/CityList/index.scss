@@ -1,9 +1,6 @@
 .cityList {
   height: 100%;
   padding-top: 45px;
-  .navbar {
-    margin-top: -45px;
-  }
   background-color: #fff;
   .city {
     padding-top: 10px;
@@ -43,4 +40,12 @@
       font-size: 12px;
     }
   }
+}
+
+.cityList .am-navbar {
+  margin-top: -45px;
+}
+
+.cityList .am-navbar-title {
+  font-size: 15px;
 }

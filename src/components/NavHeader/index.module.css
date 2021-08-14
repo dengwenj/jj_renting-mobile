@@ -1,0 +1,9 @@
+.navBar {
+  background-color: #f6f5f6;
+  color: #333;
+}
+
+.navBar .am-navbar-title {
+  font-size: 16px;
+  color: #333;
+}

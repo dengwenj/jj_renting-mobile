@@ -1,0 +1,17 @@
+.map {
+  padding-top: 45px;
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+}
+
+.map :global(.am-navbar) {
+  margin-top: -45px;
+  border-bottom: 1px solid #ddd;
+}
+
+.map :global(.am-navbar-title) {
+  font-size: 15px;
+}
