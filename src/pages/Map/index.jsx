@@ -27,6 +27,7 @@ export default class Map extends Component {
       label,
       function (point) {
         if (point) {
+          // point 这个是坐标
           // 初始化地图，设置地图展示级别
           map.centerAndZoom(point, 11)
           map.enableScrollWheelZoom(true) //开启鼠标滚轮缩放
@@ -35,6 +36,20 @@ export default class Map extends Component {
           map.addControl(new window.BMapGL.ZoomControl()) // 添加缩放控件
           map.addControl(new window.BMapGL.ScaleControl()) // 添加比例尺控件
         }
+
+        // 文本覆盖物
+        // 1 创建 label 实例对象
+        const optn = {
+          position: point,
+          // offset: new window.BMapGL.Size(10, 20),
+        }
+        const label = new window.BMapGL.Label('这个文本覆盖物', optn)
+        // 2 调用 setStyle() 方法设置样式
+        label.setStyle({
+          color: 'red',
+        })
+        // 3 在 map 对象上调用 addOverlay() 放法，将文本覆盖物添加到地图中
+        map.addOverlay(label)
       },
       label
     )
