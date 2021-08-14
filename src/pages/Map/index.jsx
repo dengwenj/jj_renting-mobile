@@ -37,16 +37,35 @@ export default class Map extends Component {
           map.addControl(new window.BMapGL.ScaleControl()) // 添加比例尺控件
         }
 
-        // 文本覆盖物
+        // 房源覆盖物
         // 1 创建 label 实例对象
-        const optn = {
+        const opts = {
           position: point,
-          // offset: new window.BMapGL.Size(10, 20),
+          offset: new window.BMapGL.Size(-35, -35),
         }
-        const label = new window.BMapGL.Label('这个文本覆盖物', optn)
+        const label = new window.BMapGL.Label('', opts)
+        // 调用 Label 的 setContent() 方法，传入 HTML 结构
+        label.setContent(
+          `<div>
+            <div class="${styles.bubble}">上海</div>
+            <div class="${styles.name}">99套</div>
+          </div>`
+        )
         // 2 调用 setStyle() 方法设置样式
         label.setStyle({
+          width: '70px',
+          height: '70px',
+          borderRadius: '50%',
+          backgroundColor: 'rgb(11, 156, 107, 0.8)',
+          border: '1px solid #fff',
           color: 'red',
+          textAlign: 'center',
+          lineHeight: '70px',
+          cursor: 'pointer',
+        })
+        // 给文本覆盖物添加点击事件
+        label.addEventListener('click', () => {
+          console.log('点击')
         })
         // 3 在 map 对象上调用 addOverlay() 放法，将文本覆盖物添加到地图中
         map.addOverlay(label)
