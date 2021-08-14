@@ -24,8 +24,13 @@ export default class CityList extends Component {
   }
 
   // 加载完毕调用的生命周期钩子
-  componentDidMount() {
-    this._getCityList()
+  async componentDidMount() {
+    await this._getCityList()
+
+    // 调用 measureAllRows，提前计算 List 中每一行的高度，实现 scrollToRow 的精确跳转
+    // 调用这个方法的时候，需要保证 List 组件中已经有数据了，没有的话会报错
+    // 只要保证这个方法是在获取数据之后调用的即可
+    this.listRef.measureAllRows()
   }
 
   // 数据格式化的方法
@@ -112,6 +117,7 @@ export default class CityList extends Component {
       <li
         className={`right_index ${active === index ? 'active' : ''}`}
         key={item}
+        onClick={this.ringhtIndexClick(index)}
       >
         {item === 'hot' ? '热' : item.toUpperCase()}
       </li>
@@ -122,6 +128,14 @@ export default class CityList extends Component {
   onRowsRendered = ({ startIndex }) => {
     // 判断 如果当前的这个索引不等于状态中的索引了就更新
     if (startIndex !== this.state.active) this.setState({ active: startIndex })
+  }
+
+  // 点击右侧索引
+  ringhtIndexClick = (index) => {
+    return () => {
+      // 调用 List 实例方法 这个方法可以滚动到相应的索引
+      this.listRef.scrollToRow(index)
+    }
   }
 
   render() {
@@ -139,12 +153,14 @@ export default class CityList extends Component {
         <AutoSizer className="list">
           {({ width, height }) => (
             <List
+              ref={(c) => (this.listRef = c)}
               width={width}
               height={height}
               rowCount={this.state.cityIndex.length}
               rowHeight={this.getRowHeight}
               rowRenderer={this.rowRenderer}
               onRowsRendered={this.onRowsRendered}
+              scrollToAlignment="start"
             />
           )}
         </AutoSizer>
