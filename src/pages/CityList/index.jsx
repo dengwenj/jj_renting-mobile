@@ -1,9 +1,29 @@
 import React, { Component } from 'react'
 import { NavBar } from 'antd-mobile'
+import { List } from 'react-virtualized'
 import { getCityList, getHotCity } from '@api/area'
 import getCurrentCity from '@utils/currentCity'
 import './index.scss'
 import '@assets/fonts/iconfont.css'
+
+// 列表数据的数据源
+const list = Array(100).fill('react-virtualized')
+
+// 渲染每一行数据的渲染函数
+// 函数的返回值就表示最终渲染在页面中的内容
+function rowRenderer({
+  key, //唯一的 key 值
+  index, // 索引号
+  isScrolling, // 当前项是否正在滚动中
+  isVisible, // 当前项在 list 中是可见的
+  style, // 指定每一行的位置 样式
+}) {
+  return (
+    <div key={key} style={style}>
+      {list[index]} {isScrolling + ''} {isVisible + ''}
+    </div>
+  )
+}
 
 export default class CityList extends Component {
   // 加载完毕调用的生命周期钩子
@@ -61,6 +81,15 @@ export default class CityList extends Component {
         >
           城市选择
         </NavBar>
+
+        {/* 城市列表 */}
+        <List
+          width={300}
+          height={300}
+          rowCount={list.length}
+          rowHeight={20}
+          rowRenderer={rowRenderer}
+        />
       </div>
     )
   }
