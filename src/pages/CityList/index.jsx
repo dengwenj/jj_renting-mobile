@@ -67,6 +67,7 @@ export default class CityList extends Component {
     this.setState({
       cityList,
       cityIndex,
+      active: 0,
     })
   }
 
@@ -105,6 +106,16 @@ export default class CityList extends Component {
     return TITLE_HEIGHT + cityLength * NAME_HEIGHT
   }
 
+  // 右侧的索引列表
+  ringhtIndexList = () => {
+    const { cityIndex, active } = this.state
+    return cityIndex.map((item, index) => (
+      <li className={`right_index ${active === index ? 'active' : ''}`}>
+        {item === 'hot' ? '热' : item.toUpperCase()}
+      </li>
+    ))
+  }
+
   render() {
     return (
       <div className="cityList">
@@ -128,6 +139,8 @@ export default class CityList extends Component {
             />
           )}
         </AutoSizer>
+        {/* 右侧索引列表 */}
+        <ul className="right">{this.ringhtIndexList()}</ul>
       </div>
     )
   }
