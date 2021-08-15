@@ -4,7 +4,16 @@ import { getItem } from '@utils/storage'
 import { getHouseData } from '@api/area'
 import styles from './index.module.css'
 
+// 网络请求
+import { getHousesList } from '@api/house'
+import Popup from './Popup'
+
 export default class Map extends Component {
+  state = {
+    modal: false,
+    content: [],
+  }
+
   // 挂载完毕生命周期调用的钩子
   componentDidMount() {
     this.initMap()
@@ -230,9 +239,25 @@ export default class Map extends Component {
     // 给每个覆盖物添加唯一标识
     label.id = value
     // 给文本覆盖物添加点击事件
-    label.addEventListener('click', () => {})
+    label.addEventListener('click', async () => {
+      // 发送请求
+      const res = await getHousesList(value)
+      const content = res.data.body.list
+      // 让弹出框显示
+      this.setState({
+        content,
+        modal: true,
+      })
+    })
     // 3 在 map 对象上调用 addOverlay() 放法，将文本覆盖物添加到地图中
     this.map.addOverlay(label)
+  }
+
+  // 子传父
+  onClose = (bool) => {
+    this.setState({
+      modal: bool,
+    })
   }
 
   render() {
@@ -241,6 +266,11 @@ export default class Map extends Component {
         <NavHeader>地图找房</NavHeader>
         {/* 创建地图容器元素 */}
         <div id="container" className={styles.container}></div>
+        <Popup
+          modal={this.state.modal}
+          content={this.state.content}
+          onClose={this.onClose}
+        />
       </div>
     )
   }
