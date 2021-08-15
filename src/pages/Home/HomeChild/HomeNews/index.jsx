@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { WingBlank } from 'antd-mobile'
-
+import BASE_URL from '@utils/url'
 import { newNews } from '@api/home'
 import './index.scss'
 
@@ -23,7 +23,7 @@ export default function HomeNews() {
         <WingBlank size="md" key={item.id}>
           <div className="content">
             <div className="left">
-              <img src={`http://localhost:8080${item.imgSrc}`} alt="" />
+              <img src={BASE_URL + item.imgSrc} alt="" />
             </div>
             <div className="right">
               <div>
