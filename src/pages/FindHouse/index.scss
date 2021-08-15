@@ -1,0 +1,32 @@
+.find_house {
+  .icon-back {
+    font-size: 14px !important;
+    color: #aaa;
+  }
+  .con {
+    top: 5px;
+    width: 92%;
+    left: 30px;
+    padding-left: 0px;
+    .left {
+      flex: 14;
+      .dz {
+        font-size: 12px;
+      }
+    }
+    .right {
+      flex: 1;
+    }
+  }
+  .icon-map {
+    color: #21b979 !important;
+  }
+  .top {
+    .icon-back {
+      padding: 5px;
+      position: absolute;
+      top: 9px;
+      left: 5px;
+    }
+  }
+}
