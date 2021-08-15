@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Carousel, Flex } from 'antd-mobile'
+import BASE_URL from '@utils/url'
 
 // 网络请求
 import { getSwiper } from '@/api/home'
@@ -52,7 +53,7 @@ function HomeSwiper(props) {
               }}
             >
               <img
-                src={`http://localhost:8080${item.imgSrc}`}
+                src={BASE_URL + item.imgSrc}
                 alt=""
                 style={{ width: '100%', verticalAlign: 'top' }}
               />

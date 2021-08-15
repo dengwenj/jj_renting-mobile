@@ -115,19 +115,23 @@ export default class Map extends Component {
   // 1 接收区域 id 参数，获取该区域下的房源数据 遍历
   // 2 获取房源类型以及下级地图缩放级别
   renderOverlays = async (id) => {
-    Toast.loading('加载中...')
+    try {
+      Toast.loading('加载中...')
 
-    const res = await getHouseData(id)
+      const res = await getHouseData(id)
 
-    // 调用计算类型和缩放级别获取返回值
-    const { nextZoom, type } = this.getTypeAndZoom()
+      // 调用计算类型和缩放级别获取返回值
+      const { nextZoom, type } = this.getTypeAndZoom()
 
-    // 遍历房源
-    res.data.body.forEach((item) => {
-      // 创建覆盖物
-      this.createOverlays(item, nextZoom, type)
-    })
-    Toast.hide()
+      // 遍历房源
+      res.data.body.forEach((item) => {
+        // 创建覆盖物
+        this.createOverlays(item, nextZoom, type)
+      })
+      Toast.hide()
+    } catch (error) {
+      Toast.hide()
+    }
   }
 
   // 计算类型和缩放级别 getTypeAndZoom()
@@ -244,16 +248,20 @@ export default class Map extends Component {
     label.id = value
     // 给文本覆盖物添加点击事件
     label.addEventListener('click', async (e) => {
-      Toast.loading('加载中...')
-      // 发送请求 获取房源数据
-      const res = await getHousesList(value)
-      const content = res.data.body.list
-      // 让弹出框显示
-      this.setState({
-        content,
-        modal: true,
-      })
-      Toast.hide()
+      try {
+        Toast.loading('加载中...')
+        // 发送请求 获取房源数据
+        const res = await getHousesList(value)
+        const content = res.data.body.list
+        // 让弹出框显示
+        this.setState({
+          content,
+          modal: true,
+        })
+        Toast.hide()
+      } catch (error) {
+        Toast.hide()
+      }
       // 调用地图 panBy() 方法
       // 移动到中央
       // this.map.panBy(

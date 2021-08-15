@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Modal } from 'antd-mobile'
+import BASE_URL from '@utils/url'
 import './index.scss'
 
 export default class Popup extends Component {
@@ -14,11 +15,7 @@ export default class Popup extends Component {
         <div className="content" key={item.houseCode}>
           <div className="tipian">
             <img
-              src={
-                content.length === 0
-                  ? ''
-                  : `http://localhost:8080${item.houseImg}`
-              }
+              src={content.length === 0 ? '' : BASE_URL + item.houseImg}
               alt=""
             />
           </div>
