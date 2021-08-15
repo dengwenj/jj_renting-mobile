@@ -92,9 +92,9 @@ export default class Map extends Component {
         //     // 调用 clearOverlays() 方法清除当前覆盖物
         //     map.clearOverlays()
         //   })
-        // })
         // 3 在 map 对象上调用 addOverlay() 放法，将文本覆盖物添加到地图中
-        map.addOverlay(label)
+        // map.addOverlay(label)
+        // })
       },
       label
     )
@@ -164,10 +164,48 @@ export default class Map extends Component {
   }
 
   // 创建区，镇覆盖物 createCircle()
-  createCircle = () => {}
+  createCircle = (value, count, areaName, areaPoint, nextZoom) => {
+    const opts = {
+      position: areaPoint,
+      offset: new window.BMapGL.Size(-35, -35),
+    }
+    const label = new window.BMapGL.Label('', opts)
+    // 调用 Label 的 setContent() 方法，传入 HTML 结构
+    label.setContent(
+      `<div>
+        <div class="${styles.bubble}">${areaName}</div>
+        <div class="${styles.name}">${count}套</div>
+      </div>`
+    )
+    // 2 调用 setStyle() 方法设置样式
+    label.setStyle({
+      width: '70px',
+      height: '70px',
+      borderRadius: '50%',
+      backgroundColor: 'rgb(11, 156, 107, 0.8)',
+      border: '1px solid #fff',
+      color: 'red',
+      textAlign: 'center',
+      lineHeight: '70px',
+      cursor: 'pointer',
+    })
+    // 给每个覆盖物添加唯一标识
+    label.id = value
+    // 给文本覆盖物添加点击事件
+    label.addEventListener('click', () => {
+      // 调用 renderOverlays 方法，获取该区域下的房源数据
+      this.renderOverlays(label.id)
+      // 放大地图
+      this.map.centerAndZoom(areaPoint, nextZoom)
+      // 调用 clearOverlays() 方法清除当前覆盖物
+      this.map.clearOverlays()
+    })
+    // 3 在 map 对象上调用 addOverlay() 放法，将文本覆盖物添加到地图中
+    this.map.addOverlay(label)
+  }
 
   // 创建小区覆盖物 createRect()
-  createRect = () => {}
+  createRect = (value, count, areaName, areaPoint) => {}
 
   render() {
     return (
