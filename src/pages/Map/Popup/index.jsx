@@ -3,6 +3,7 @@ import { Modal } from 'antd-mobile'
 import './index.scss'
 
 export default class Popup extends Component {
+  // 让弹出框关闭
   onClose = () => {
     this.props.onClose(false)
   }

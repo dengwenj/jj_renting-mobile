@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import NavHeader from '@components/NavHeader'
 import { getItem } from '@utils/storage'
 import { getHouseData } from '@api/area'
+import { Toast } from 'antd-mobile'
 import styles from './index.module.css'
 
 // 网络请求
@@ -114,6 +115,8 @@ export default class Map extends Component {
   // 1 接收区域 id 参数，获取该区域下的房源数据 遍历
   // 2 获取房源类型以及下级地图缩放级别
   renderOverlays = async (id) => {
+    Toast.loading('加载中...')
+
     const res = await getHouseData(id)
 
     // 调用计算类型和缩放级别获取返回值
@@ -124,6 +127,7 @@ export default class Map extends Component {
       // 创建覆盖物
       this.createOverlays(item, nextZoom, type)
     })
+    Toast.hide()
   }
 
   // 计算类型和缩放级别 getTypeAndZoom()
@@ -239,8 +243,9 @@ export default class Map extends Component {
     // 给每个覆盖物添加唯一标识
     label.id = value
     // 给文本覆盖物添加点击事件
-    label.addEventListener('click', async () => {
-      // 发送请求
+    label.addEventListener('click', async (e) => {
+      Toast.loading('加载中...')
+      // 发送请求 获取房源数据
       const res = await getHousesList(value)
       const content = res.data.body.list
       // 让弹出框显示
@@ -248,6 +253,13 @@ export default class Map extends Component {
         content,
         modal: true,
       })
+      Toast.hide()
+      // 调用地图 panBy() 方法
+      // 移动到中央
+      // this.map.panBy(
+      //   window.innerWidth / 2 - e.clientY,
+      //   (window.innerHeight - 330) / 2 - e.clientX
+      // )
     })
     // 3 在 map 对象上调用 addOverlay() 放法，将文本覆盖物添加到地图中
     this.map.addOverlay(label)
@@ -266,6 +278,8 @@ export default class Map extends Component {
         <NavHeader>地图找房</NavHeader>
         {/* 创建地图容器元素 */}
         <div id="container" className={styles.container}></div>
+
+        {/* 展示房源信息 */}
         <Popup
           modal={this.state.modal}
           content={this.state.content}
