@@ -27,3 +27,14 @@ export const getHotCity = () => {
     url: '/area/hot',
   })
 }
+
+// 查询房源数据
+export const getHouseData = (id) => {
+  return request({
+    method: 'GET',
+    url: '/area/map',
+    params: {
+      id,
+    },
+  })
+}
