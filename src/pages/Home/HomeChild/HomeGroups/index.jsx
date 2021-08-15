@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Flex } from 'antd-mobile'
+import BASE_URL from '@utils/url'
 
 import { rentingGroups } from '@api/home'
 import './index.scss'
@@ -27,7 +28,7 @@ export default function HomeGroups() {
               <span className="desc">{item.desc}</span>
             </div>
             <div className="img">
-              <img src={`http://localhost:8080${item.imgSrc}`} alt="" />
+              <img src={BASE_URL + item.imgSrc} alt="" />
             </div>
           </Flex.Item>
         </Flex>

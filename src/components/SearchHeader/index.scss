@@ -1,0 +1,54 @@
+.con {
+  width: 100%;
+  padding: 0 20px;
+  padding-right: 10px;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  .left {
+    padding: 8px 0;
+    background-color: #fff;
+    border-radius: 3px;
+    flex: 1;
+    display: flex;
+    .dz {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #eee;
+      span {
+        padding-left: 3px;
+        color: #333;
+      }
+      i {
+        margin-left: 3px;
+        font-size: 14px;
+        color: #bbb;
+      }
+    }
+    .search {
+      padding-left: 10px;
+      flex: 5;
+      display: flex;
+      align-items: center;
+      i {
+        color: #bbb;
+        font-size: 15px;
+      }
+      span {
+        margin-left: 5px;
+        font-size: 13px;
+        color: #aaa;
+      }
+    }
+  }
+  .right {
+    padding-left: 10px;
+    width: 30px;
+    i {
+      font-size: 21px;
+      color: #fff;
+    }
+  }
+}

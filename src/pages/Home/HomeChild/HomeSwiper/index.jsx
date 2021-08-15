@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Carousel, Flex } from 'antd-mobile'
+import { Carousel } from 'antd-mobile'
 import BASE_URL from '@utils/url'
+import SearchHeader from '@components/SearchHeader'
 
 // 网络请求
 import { getSwiper } from '@/api/home'
-import './index.scss'
-import '@assets/fonts/iconfont.css'
 
 function HomeSwiper(props) {
   const { cityInfo } = props
@@ -64,21 +63,7 @@ function HomeSwiper(props) {
         ''
       )}
       {/* 顶部导航 */}
-      <Flex className="con">
-        <div className="left">
-          <div className="dz" onClick={() => props.history.push('/citylist')}>
-            <span>{cityInfo}</span>
-            <i className="iconfont icon-arrow"></i>
-          </div>
-          <div className="search" onClick={() => props.history.push('/search')}>
-            <i className="iconfont icon-seach"></i>
-            <span>请输入小区或地址</span>
-          </div>
-        </div>
-        <div className="right" onClick={() => props.history.push('/map')}>
-          <i className="iconfont icon-map"></i>
-        </div>
-      </Flex>
+      <SearchHeader cityInfo={cityInfo} />
     </div>
   )
 

@@ -19,7 +19,7 @@ const navs = [
     id: 2,
     img: Nav2,
     title: '和租',
-    path: '/news',
+    path: '/findhouse',
   },
   {
     id: 3,
