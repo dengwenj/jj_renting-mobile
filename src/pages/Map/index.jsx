@@ -147,7 +147,21 @@ export default class Map extends Component {
   }
 
   // 创建覆盖物 createOverlays()
-  createOverlays = () => {}
+  createOverlays = (item, nextZoom, type) => {
+    const {
+      coord: { latitude, longitude },
+      value,
+      count,
+      label: areaName,
+    } = item
+    // 当前坐标对象
+    const areaPoint = new window.BMapGL.Point(longitude, latitude)
+    // 区或镇覆盖物
+    if (type === 'circle')
+      return this.createCircle(value, count, areaName, areaPoint, nextZoom)
+    // 小区覆盖物
+    this.createRect(value, count, areaName, areaPoint)
+  }
 
   // 创建区，镇覆盖物 createCircle()
   createCircle = () => {}
