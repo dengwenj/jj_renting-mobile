@@ -132,7 +132,7 @@ export default class Map extends Component {
       type = 'circle'
     } else if (zoom >= 12 && zoom < 14) {
       // 镇
-      nextZoom = 13
+      nextZoom = 15
       type = 'circle'
     } else if (zoom >= 14 && zoom < 16) {
       // 小区
@@ -205,7 +205,35 @@ export default class Map extends Component {
   }
 
   // 创建小区覆盖物 createRect()
-  createRect = (value, count, areaName, areaPoint) => {}
+  createRect = (value, count, areaName, areaPoint) => {
+    const opts = {
+      position: areaPoint,
+      offset: new window.BMapGL.Size(-50, -28),
+    }
+    const label = new window.BMapGL.Label('', opts)
+    // 调用 Label 的 setContent() 方法，传入 HTML 结构
+    label.setContent(
+      `<div class=${styles.xq}>
+        <div class=${styles.xqName}>${areaName}</div>
+        <div class=${styles.xqTiao}>${count}套</div>
+        <div class=${styles.sjx}></div>
+      </div>`
+    )
+    // 2 调用 setStyle() 方法设置样式
+    label.setStyle({
+      width: '100px',
+      height: '20px',
+      backgroundColor: 'rgb(11, 156, 107, 0.9)',
+      border: '0',
+      borderRadius: '2px',
+    })
+    // 给每个覆盖物添加唯一标识
+    label.id = value
+    // 给文本覆盖物添加点击事件
+    label.addEventListener('click', () => {})
+    // 3 在 map 对象上调用 addOverlay() 放法，将文本覆盖物添加到地图中
+    this.map.addOverlay(label)
+  }
 
   render() {
     return (
