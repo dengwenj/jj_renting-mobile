@@ -8,6 +8,7 @@ import FilterBottom from '@components/FilterBottom'
 import '@assets/fonts/iconfont.css'
 import './index.scss'
 
+// 外面头部的数据源
 const titleList = [
   {
     title: '区域',
@@ -36,6 +37,7 @@ export default class Filter extends Component {
     isShowMore: false,
   }
 
+  // 点击外面的头部的功能
   flexItemClick = (index) => {
     return () => {
       if (index !== 3)
@@ -55,6 +57,7 @@ export default class Filter extends Component {
     }
   }
 
+  // 展示外面的头部功能
   flexItem = () => {
     return titleList.map((item, index) => {
       return (
@@ -70,6 +73,7 @@ export default class Filter extends Component {
     })
   }
 
+  // open 状态切换时调用  就是触发了遮罩层
   onOpenChange = () => {
     this.setState({
       open: false,
@@ -96,6 +100,7 @@ export default class Filter extends Component {
     })
   }
 
+  // 子传父 这个是传到 filterMore 里面的 让其点击内部的筛选展示筛选的部分
   filterTitle = (indexIsSan, open, isShowMore) => {
     console.log(indexIsSan)
     this.setState({
@@ -106,6 +111,7 @@ export default class Filter extends Component {
   }
 
   render() {
+    // 展示内部数据源
     const sidebar = (
       <div
         style={{
@@ -145,14 +151,13 @@ export default class Filter extends Component {
             sidebar={sidebar}
             open={this.state.open}
             onOpenChange={this.onOpenChange}
-            dragToggleDistance={20}
           >
             <div></div>
           </Drawer>
         </div>
         {/* 内部  */}
 
-        {/* 筛选 当点击外部的筛选时，展示这里 */}
+        {/* 筛选 当点击外部或者内部的筛选时，展示这里 */}
         {this.state.indexIsSan === 3 ? (
           <FilterMore
             isShowMore={this.state.isShowMore}
@@ -162,7 +167,7 @@ export default class Filter extends Component {
         ) : (
           ''
         )}
-        {/* 筛选 */}
+        {/* 筛选 当点击外部或者内部的筛选时，展示这里 */}
       </div>
     )
   }

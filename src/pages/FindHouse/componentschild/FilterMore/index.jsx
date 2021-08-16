@@ -6,19 +6,25 @@ import FilterBottom from '@components/FilterBottom'
 import './index.scss'
 
 export default class FilterMore extends Component {
+  // open 状态切换时调用 就是触发了遮罩层
   onOpenChange = () => {
     // 子传父
     this.props.onOpenChangeMore(false, -1)
+    console.log(1)
   }
 
+  // 点击清除
   qxClick = () => {}
 
+  // 点击确定
   qdClick = () => {
     console.log(2)
   }
+
   render() {
     const { isShowMore, zIndex } = this.props
-    console.log(isShowMore)
+
+    // 展示的数据源
     const sidebar = (
       <div>
         <div className="fliter_more">

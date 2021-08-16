@@ -19,8 +19,9 @@ export default class FindHouse extends Component {
         </div>
         {/* 顶部导航栏 */}
 
-        {/* 筛选 */}
+        {/* 区域，方式，租金，筛选部分 */}
         <Filter />
+        {/* 区域，方式，租金，筛选部分 */}
       </div>
     )
   }

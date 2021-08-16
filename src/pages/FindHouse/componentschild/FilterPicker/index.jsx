@@ -8,6 +8,7 @@ export default class FilterPicker extends Component {
     value: null,
   }
 
+  // 选中后的回调
   onChange = (value) => {
     console.log(value)
     this.setState({
