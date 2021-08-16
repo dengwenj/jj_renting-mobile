@@ -30,14 +30,15 @@ export default class Filter extends Component {
   state = {
     open: false,
     zIndex: -1,
+    indexTitle: 0,
   }
 
   flexItemClick = (index) => {
     return () => {
-      console.log(index)
       this.setState({
         open: true,
         zIndex: 1,
+        indexTitle: index,
       })
     }
   }
@@ -72,7 +73,7 @@ export default class Filter extends Component {
           backgroundColor: '#fff',
         }}
       >
-        <FilterTitle />
+        <FilterTitle indexTitle={this.state.indexTitle} />
         <FilterPicker />
         <FilterBottom qd={'确定'} qx={'取消'} />
       </div>
