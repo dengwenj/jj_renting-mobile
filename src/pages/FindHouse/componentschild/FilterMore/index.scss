@@ -1,0 +1,41 @@
+.drawer_more {
+  height: 100%;
+  .am-drawer-sidebar {
+    background-color: #fff;
+  }
+  .fliter_more {
+    margin-top: 40px;
+    height: 100%;
+    width: 300px;
+    background-color: #fff;
+    .item {
+      border-bottom: 1px solid #eee;
+      .sub_title {
+        font-size: 14px;
+        padding: 15px 0 15px 10px;
+        color: #333;
+      }
+      .flex_more {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+        .flexitem_more {
+          border: 1px solid #eee;
+          width: 27.33%;
+          margin: 5px;
+          margin-left: 10px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .bottom {
+    width: 100%;
+    position: fixed;
+    top: 0px;
+  }
+}

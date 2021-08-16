@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { PickerView } from 'antd-mobile'
 
+import './index.scss'
+
 export default class FilterPicker extends Component {
   state = {
     value: null,
@@ -41,7 +43,7 @@ export default class FilterPicker extends Component {
       ],
     ]
     return (
-      <div>
+      <div className="picker">
         <PickerView
           onChange={this.onChange}
           onScrollChange={this.onScrollChange}

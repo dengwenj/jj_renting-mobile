@@ -3,6 +3,7 @@ import { Flex, Drawer } from 'antd-mobile'
 
 import FilterTitle from '../FilterTitle'
 import FilterPicker from '../FilterPicker'
+import FilterMore from '../FilterMore'
 import FilterBottom from '@components/FilterBottom'
 import '@assets/fonts/iconfont.css'
 import './index.scss'
@@ -31,14 +32,25 @@ export default class Filter extends Component {
     open: false,
     zIndex: -1,
     indexTitle: 0,
+    indexIsSan: null,
+    isShowMore: false,
   }
 
   flexItemClick = (index) => {
     return () => {
+      if (index !== 3)
+        return this.setState({
+          open: true,
+          zIndex: 1,
+          indexTitle: index,
+          indexIsSan: null,
+        })
+
+      // 当等于三是显示外部的筛选
       this.setState({
-        open: true,
+        indexIsSan: index,
+        isShowMore: true,
         zIndex: 1,
-        indexTitle: index,
       })
     }
   }
@@ -62,6 +74,14 @@ export default class Filter extends Component {
     this.setState({
       open: false,
       zIndex: -1,
+    })
+  }
+
+  // 子传父
+  onOpenChangeMore = (bool, zIndex) => {
+    this.setState({
+      isShowMore: bool,
+      zIndex,
     })
   }
 
@@ -101,8 +121,19 @@ export default class Filter extends Component {
             <div></div>
           </Drawer>
         </div>
-
         {/* 内部  */}
+
+        {/* 筛选 当点击外部的筛选时，展示这里 */}
+        {this.state.indexIsSan === 3 ? (
+          <FilterMore
+            isShowMore={this.state.isShowMore}
+            onOpenChangeMore={this.onOpenChangeMore}
+            zIndex={this.state.zIndex}
+          />
+        ) : (
+          ''
+        )}
+        {/* 筛选 */}
       </div>
     )
   }
