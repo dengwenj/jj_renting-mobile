@@ -18,7 +18,8 @@ export default class FilterMore extends Component {
 
   // 点击确定
   qdClick = () => {
-    console.log(2)
+    // 点击确定让筛选那个按钮高亮 还有关闭这个筛选
+    this.props.filterGaoLiang(false, -2, 3)
   }
 
   render() {

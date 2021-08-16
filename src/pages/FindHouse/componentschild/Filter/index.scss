@@ -9,6 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 14px;
     .icon-arrow {
       color: #ddd;
       font-size: 13px;
@@ -20,5 +21,8 @@
   }
   .am-drawer-draghandle {
     display: none;
+  }
+  .active {
+    color: #13a677;
   }
 }

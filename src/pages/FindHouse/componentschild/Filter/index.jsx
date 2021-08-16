@@ -35,6 +35,7 @@ export default class Filter extends Component {
     indexTitle: 0,
     indexIsSan: null,
     isShowMore: false,
+    selectedSegmentIndex: 0,
   }
 
   // 点击外面的头部的功能
@@ -62,7 +63,9 @@ export default class Filter extends Component {
     return titleList.map((item, index) => {
       return (
         <Flex.Item
-          className="flex_item"
+          className={`flex_item ${
+            index === this.state.selectedSegmentIndex ? 'active' : ''
+          }`}
           key={item.title}
           onClick={this.flexItemClick(index)}
         >
@@ -90,7 +93,13 @@ export default class Filter extends Component {
   }
 
   // 点击确定
-  qdClick = () => {}
+  qdClick = () => {
+    this.setState({
+      open: false,
+      zIndex: -1,
+      selectedSegmentIndex: this.state.indexTitle,
+    })
+  }
 
   // 点击取消
   qxClick = () => {
@@ -102,11 +111,31 @@ export default class Filter extends Component {
 
   // 子传父 这个是传到 filterMore 里面的 让其点击内部的筛选展示筛选的部分
   filterTitle = (indexIsSan, open, isShowMore) => {
-    console.log(indexIsSan)
     this.setState({
       indexIsSan,
       open,
       isShowMore,
+    })
+  }
+
+  // 高亮外部
+  gaoLiang = (selectedSegmentIndex) => {
+    // 一定要用一个状态 ！！！
+    // 如果等于三了 因为就不会点击了，所以这里直接更新
+    if (selectedSegmentIndex === 3)
+      return this.setState({ selectedSegmentIndex })
+
+    this.setState({
+      indexTitle: selectedSegmentIndex,
+    })
+  }
+
+  // 也传给点击筛选 高亮 关闭功能 这哥关闭功能不是 open 变量 是 isShowMore 变量
+  filterGaoLiang = (isShowMore, zIndex, num) => {
+    this.setState({
+      selectedSegmentIndex: num,
+      isShowMore,
+      zIndex,
     })
   }
 
@@ -123,6 +152,7 @@ export default class Filter extends Component {
           indexTitle={this.state.indexTitle}
           indexIsSan={this.state.indexIsSan}
           filterTitle={this.filterTitle}
+          gaoLiang={this.gaoLiang}
         />
         <FilterPicker />
         <FilterBottom
@@ -163,6 +193,7 @@ export default class Filter extends Component {
             isShowMore={this.state.isShowMore}
             onOpenChangeMore={this.onOpenChangeMore}
             zIndex={this.state.zIndex}
+            filterGaoLiang={this.filterGaoLiang}
           />
         ) : (
           ''

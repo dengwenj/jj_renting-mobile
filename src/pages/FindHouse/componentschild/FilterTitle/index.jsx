@@ -5,15 +5,16 @@ import './index.scss'
 export default class FilterTitle extends Component {
   // 回调函数, 其中e.nativeEvent.selectedSegmentIndex是选中项索引, e.nativeEvent.value是选中的值.
   onChange = (e) => {
-    if (e.nativeEvent.selectedSegmentIndex === 3) {
-      // 第二个参数 false 是 open 第三个参数 true 是 isShowMore
-      this.props.filterTitle(3, false, true)
-    }
+    const selectedSegmentIndex = e.nativeEvent.selectedSegmentIndex
+    this.props.gaoLiang(selectedSegmentIndex)
+
+    // 第二个参数 false 是 open 第三个参数 true 是 isShowMore
+    if (selectedSegmentIndex === 3) this.props.filterTitle(3, false, true)
   }
 
   // 回调函数
   onValueChange = (val) => {
-    console.log(val)
+    // console.log(val)
   }
 
   render() {
