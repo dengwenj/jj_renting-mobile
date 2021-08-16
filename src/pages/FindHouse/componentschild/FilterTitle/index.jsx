@@ -4,12 +4,16 @@ import './index.scss'
 
 export default class FilterTitle extends Component {
   onChange = (e) => {
-    console.log(e)
+    if (e.nativeEvent.selectedSegmentIndex === 3) {
+      // 第二个参数 false 是 open 第三个参数 true 是 isShowMore
+      this.props.filterTitle(3, false, true)
+    }
   }
 
   onValueChange = (val) => {
     console.log(val)
   }
+
   render() {
     const { indexTitle } = this.props
     return (

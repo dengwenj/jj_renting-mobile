@@ -85,6 +85,26 @@ export default class Filter extends Component {
     })
   }
 
+  // 点击确定
+  qdClick = () => {}
+
+  // 点击取消
+  qxClick = () => {
+    this.setState({
+      open: false,
+      zIndex: -1,
+    })
+  }
+
+  filterTitle = (indexIsSan, open, isShowMore) => {
+    console.log(indexIsSan)
+    this.setState({
+      indexIsSan,
+      open,
+      isShowMore,
+    })
+  }
+
   render() {
     const sidebar = (
       <div
@@ -93,9 +113,18 @@ export default class Filter extends Component {
           backgroundColor: '#fff',
         }}
       >
-        <FilterTitle indexTitle={this.state.indexTitle} />
+        <FilterTitle
+          indexTitle={this.state.indexTitle}
+          indexIsSan={this.state.indexIsSan}
+          filterTitle={this.filterTitle}
+        />
         <FilterPicker />
-        <FilterBottom qd={'确定'} qx={'取消'} />
+        <FilterBottom
+          qd={'确定'}
+          qx={'取消'}
+          qdClick={this.qdClick}
+          qxClick={this.qxClick}
+        />
       </div>
     )
     return (

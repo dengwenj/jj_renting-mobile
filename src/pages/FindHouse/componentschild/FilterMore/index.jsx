@@ -11,9 +11,7 @@ export default class FilterMore extends Component {
     this.props.onOpenChangeMore(false, -1)
   }
 
-  qxClick = () => {
-    console.log(1)
-  }
+  qxClick = () => {}
 
   qdClick = () => {
     console.log(2)
