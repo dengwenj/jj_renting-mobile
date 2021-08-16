@@ -1,0 +1,22 @@
+.bottom {
+  display: flex;
+  height: 40px;
+  .qx {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 3;
+    color: #13a677;
+    background-color: #fff;
+    font-size: 14px;
+  }
+  .qd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 5;
+    color: #fff;
+    font-size: 14px;
+    background-color: #13a677;
+  }
+}

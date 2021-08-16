@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import SearchHeader from '@components/SearchHeader'
 import { getItem } from '@utils/storage'
+import Filter from './componentschild/Filter'
 import './index.scss'
 
 export default class FindHouse extends Component {
@@ -8,6 +9,7 @@ export default class FindHouse extends Component {
     const { label } = getItem('jjzf')
     return (
       <div className="find_house">
+        {/* 顶部导航栏 */}
         <div className="top">
           <i
             className="iconfont icon-back"
@@ -15,6 +17,10 @@ export default class FindHouse extends Component {
           ></i>
           <SearchHeader cityInfo={label} />
         </div>
+        {/* 顶部导航栏 */}
+
+        {/* 筛选 */}
+        <Filter />
       </div>
     )
   }
