@@ -10,3 +10,14 @@ export const getHousesList = (cityId) => {
     },
   })
 }
+
+// 获取房屋查询条件
+export const getHouseFind = (id) => {
+  return request({
+    method: 'GET',
+    url: '/houses/condition',
+    params: {
+      id,
+    },
+  })
+}

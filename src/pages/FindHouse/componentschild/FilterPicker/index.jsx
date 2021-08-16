@@ -4,53 +4,55 @@ import { PickerView } from 'antd-mobile'
 import './index.scss'
 
 export default class FilterPicker extends Component {
-  state = {
-    value: null,
-  }
-
   // 选中后的回调
   onChange = (value) => {
-    console.log(value)
-    this.setState({
-      value,
-    })
+    // console.log(value)
   }
 
   onScrollChange = (value) => {
-    console.log(value)
+    // console.log(value)
+  }
+
+  PickerViewData = () => {
+    const { indexTitle, indexIsSan, filtersData } = this.props
+    console.log(filtersData)
+
+    if (indexTitle === 0) {
+      // 区域
+      this.cascade = true
+      return filtersData.area
+        ? [
+            {
+              label: filtersData.area.label,
+              value: filtersData.area.value,
+              children: filtersData.area.children,
+            },
+            {
+              label: filtersData.subway.label,
+              value: filtersData.subway.value,
+              children: filtersData.subway.children,
+            },
+          ]
+        : []
+    } else if (indexTitle === 1) {
+      // 方式
+      this.cascade = false
+      return filtersData.area ? filtersData.rentType : []
+    } else if (indexTitle === 2) {
+      // 租金
+      this.cascade = false
+      return filtersData.area ? filtersData.price : []
+    }
   }
 
   render() {
-    const seasons = [
-      [
-        {
-          label: '区域',
-          value: '区域',
-        },
-        {
-          label: '地铁',
-          value: '地铁',
-        },
-      ],
-      [
-        {
-          label: '不限',
-          value: '不限',
-        },
-        {
-          label: '杨浦',
-          value: '杨浦',
-        },
-      ],
-    ]
     return (
       <div className="picker">
         <PickerView
+          data={this.PickerViewData()}
+          cascade={this.cascade}
           onChange={this.onChange}
           onScrollChange={this.onScrollChange}
-          value={this.state.value}
-          data={seasons}
-          cascade={false}
         />
       </div>
     )

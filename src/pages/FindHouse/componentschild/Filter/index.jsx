@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Flex, Drawer } from 'antd-mobile'
 
+// 网络请求
+import { getHouseFind } from '@api/house'
+import { getItem } from '@utils/storage'
 import FilterTitle from '../FilterTitle'
 import FilterPicker from '../FilterPicker'
 import FilterMore from '../FilterMore'
@@ -35,7 +38,23 @@ export default class Filter extends Component {
     indexTitle: 0,
     indexIsSan: null,
     isShowMore: false,
-    selectedSegmentIndex: 0,
+    selectedSegmentIndex: null,
+    filtersData: {},
+  }
+
+  // 挂载完毕调用的钩子
+  componentDidMount() {
+    this._getHouseFind()
+  }
+
+  // 网络请求
+  _getHouseFind = async () => {
+    const { value } = getItem('jjzf')
+    const res = await getHouseFind(value)
+    const filtersData = res.data.body
+    this.setState({
+      filtersData,
+    })
   }
 
   // 点击外面的头部的功能
@@ -154,7 +173,7 @@ export default class Filter extends Component {
           filterTitle={this.filterTitle}
           gaoLiang={this.gaoLiang}
         />
-        <FilterPicker />
+        <FilterPicker {...this.state} />
         <FilterBottom
           qd={'确定'}
           qx={'取消'}
