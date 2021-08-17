@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 import './index.scss'
 
 export default function HosueItem({ content, onClick }) {
-  return content.map((item) => {
+  return content.map((item, index) => {
     return (
-      <div className="content" key={item.houseCode}>
+      <div className="content" key={index}>
         <div className="tipian">
           <img
             src={content.length === 0 ? '' : BASE_URL + item.houseImg}

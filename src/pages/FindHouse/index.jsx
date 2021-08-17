@@ -12,6 +12,7 @@ import { getHousesList } from '@api/house'
 import HosueItem from '@components/HosueItem'
 import './index.scss'
 
+const { value } = getItem('jjzf')
 export default class FindHouse extends Component {
   state = {
     start: 1, // 页码
@@ -24,10 +25,11 @@ export default class FindHouse extends Component {
   componentDidMount() {
     // 调用 searchHouseList 获取数据
     this.searchHouseList({})
+    this.filters = {}
   }
 
   searchHouseList = async (filters) => {
-    const { value } = getItem('jjzf')
+    this.filters = filters
     const { start, end } = this.state
     filters.start = start
     filters.end = end
@@ -59,10 +61,19 @@ export default class FindHouse extends Component {
   // 加载更多数据的方法，在需要加载更多数据时，会调用这个方法
   // 返回值数要是 Promise 对象，并且这个对象应该在数据加载完成时，来调用 resolve 让 Promise 对象的状态变为已完成
   loadMoreRows = ({ startIndex, stopIndex }) => {
-    console.log(startIndex, stopIndex)
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+      const res = await getHousesList({
+        cityId: value,
+        ...this.filters,
+        start: startIndex,
+        end: stopIndex,
+      })
+      //  合并数据
+      this.setState({
+        list: [...this.state.list, ...res.data.body.list],
+      })
       // 数据加载完毕，调用 resolve 即可
-      // resolve()
+      resolve()
     })
   }
 
