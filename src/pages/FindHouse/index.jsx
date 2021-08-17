@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
-import { List, WindowScroller, AutoSizer } from 'react-virtualized'
+import {
+  List,
+  WindowScroller,
+  AutoSizer,
+  InfiniteLoader,
+} from 'react-virtualized'
 import SearchHeader from '@components/SearchHeader'
 import { getItem } from '@utils/storage'
 import Filter from './componentschild/Filter'
@@ -46,7 +51,23 @@ export default class FindHouse extends Component {
     return <HosueItem key={key} style={style} content={this.state.list} />
   }
 
+  // 表示每一行数据是否加载完成
+  isRowLoaded = ({ index }) => {
+    return !!this.state.list[index]
+  }
+
+  // 加载更多数据的方法，在需要加载更多数据时，会调用这个方法
+  // 返回值数要是 Promise 对象，并且这个对象应该在数据加载完成时，来调用 resolve 让 Promise 对象的状态变为已完成
+  loadMoreRows = ({ startIndex, stopIndex }) => {
+    console.log(startIndex, stopIndex)
+    return new Promise((resolve, reject) => {
+      // 数据加载完毕，调用 resolve 即可
+      // resolve()
+    })
+  }
+
   render() {
+    const { count } = this.state
     const { label } = getItem('jjzf')
     return (
       <div className="find_house">
@@ -66,24 +87,34 @@ export default class FindHouse extends Component {
 
         {/* List 列表 */}
         <div className="house_list">
-          <WindowScroller>
-            {({ height, isScrolling, scrollTop }) => (
-              <AutoSizer>
-                {({ width }) => (
-                  <List
-                    autoHeight // 设置高度 WindowScroller 最终渲染的列表高度
-                    width={width} // 视口的宽度
-                    height={height} // 视口的高度
-                    rowCount={this.state.count ? this.state.count : 0} // List列表项的行数
-                    rowHeight={120} // 每一行的高度
-                    rowRenderer={this.hosueListItem} // 渲染列表项中的每一行
-                    isScrolling={isScrolling}
-                    scrollTop={scrollTop}
-                  />
+          <InfiniteLoader
+            isRowLoaded={this.isRowLoaded} // 表示每一行数据是否加载完成
+            loadMoreRows={this.loadMoreRows} // 加载更多数据的方法，在需要加载更多数据时，会调用这个方法
+            rowCount={count ? count : 0}
+          >
+            {({ onRowsRendered, registerChild }) => (
+              <WindowScroller>
+                {({ height, isScrolling, scrollTop }) => (
+                  <AutoSizer>
+                    {({ width }) => (
+                      <List
+                        onRowsRendered={onRowsRendered}
+                        registerChild={registerChild}
+                        autoHeight // 设置高度 WindowScroller 最终渲染的列表高度
+                        width={width} // 视口的宽度
+                        height={height} // 视口的高度
+                        rowCount={count ? count : 0} // List列表项的行数
+                        rowHeight={120} // 每一行的高度
+                        rowRenderer={this.hosueListItem} // 渲染列表项中的每一行
+                        isScrolling={isScrolling}
+                        scrollTop={scrollTop}
+                      />
+                    )}
+                  </AutoSizer>
                 )}
-              </AutoSizer>
+              </WindowScroller>
             )}
-          </WindowScroller>
+          </InfiniteLoader>
         </div>
         {/* List 列表 */}
       </div>
