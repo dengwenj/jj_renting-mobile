@@ -25,12 +25,23 @@ export default class FilterMore extends Component {
   }
 
   // 点击清除
-  qxClick = () => {}
-
+  qxClick = () => {
+    // 更新状态中的数组为空就行了
+    this.setState({
+      selectedValues: [],
+    })
+  }
+  /* 
+    清除和确定的逻辑处理
+        1 点击取消按钮时，清空所有选中项的值（selectedValue:[]）
+        2 点击确定按钮了，将当前选中项的值和 type，传递给 Filter 父组件
+       
+  */
   // 点击确定
   qdClick = () => {
     // 点击确定让筛选那个按钮高亮 还有关闭这个筛选
-    this.props.filterGaoLiang(false, -2, 3)
+    // 点击确定按钮了，将当前选中项的值和 type，传递给 Filter 父组件 3, this.state.selectedValues
+    this.props.filterGaoLiang(false, -2, 3, this.state.selectedValues)
   }
 
   // 点击每一项

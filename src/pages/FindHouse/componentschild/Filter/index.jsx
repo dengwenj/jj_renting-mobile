@@ -160,11 +160,15 @@ export default class Filter extends Component {
   }
 
   // 也传给点击筛选 高亮 关闭功能 这哥关闭功能不是 open 变量 是 isShowMore 变量
-  filterGaoLiang = (isShowMore, zIndex, num) => {
+  filterGaoLiang = (isShowMore, zIndex, num, selectedValues) => {
     this.setState({
       selectedSegmentIndex: num,
       isShowMore,
       zIndex,
+      selectedValues: {
+        ...this.state.selectedValues,
+        [num]: selectedValues,
+      },
     })
   }
 
