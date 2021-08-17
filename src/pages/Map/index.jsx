@@ -251,7 +251,9 @@ export default class Map extends Component {
       try {
         Toast.loading('加载中...')
         // 发送请求 获取房源数据
-        const res = await getHousesList(value)
+        const res = await getHousesList({
+          cityId: value,
+        })
         const content = res.data.body.list
         // 让弹出框显示
         this.setState({

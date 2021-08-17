@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Flex, Drawer } from 'antd-mobile'
 
-// 网络请求
 import { getHouseFind } from '@api/house'
 import { getItem } from '@utils/storage'
 import FilterTitle from '../FilterTitle'
@@ -144,12 +143,10 @@ export default class Filter extends Component {
               5 获取筛选 （more） 的值（将选中值数组转化为以逗号分隔的字符串）
         */
         const { selectedValues } = this.state
-        console.log(selectedValues)
         let filters = {}
 
         // 区域
         const areaKey = selectedValues[0][0]
-        console.log(areaKey)
         let res = 'null'
         if (selectedValues[0].length === 3) {
           res =
@@ -161,14 +158,15 @@ export default class Filter extends Component {
 
         // 租金和方式
         const mode = selectedValues[1][0]
-        filters.mode = mode
+        filters.rentType = mode
         const price = selectedValues[2][0]
         filters.price = price
 
         // 筛选
         const more = selectedValues[3].join(',')
         filters.more = more
-        console.log(filters)
+        // 把参数传递到父组件里面去
+        this.props.searchHouseList(filters)
       }
     )
   }
