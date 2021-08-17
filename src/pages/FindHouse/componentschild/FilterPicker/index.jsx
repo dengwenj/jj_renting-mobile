@@ -4,22 +4,26 @@ import { PickerView } from 'antd-mobile'
 import './index.scss'
 
 export default class FilterPicker extends Component {
+  state = {
+    value: this.props.selectedValues[this.props.num],
+  }
   // 选中后的回调
   onChange = (value) => {
-    // console.log(value)
+    this.setState({ value })
+    this.props.filterPicker(value, this.props.indexTitle)
   }
 
-  onScrollChange = (value) => {
-    // console.log(value)
-  }
+  // onScrollChange = (value) => {
+  //   console.log(value)
+  // }
 
+  // 展示数据源
   PickerViewData = () => {
-    const { indexTitle, indexIsSan, filtersData } = this.props
-    console.log(filtersData)
+    const { indexTitle, filtersData } = this.props
 
     if (indexTitle === 0) {
       // 区域
-      this.cascade = true
+      this.cols = 3
       return filtersData.area
         ? [
             {
@@ -36,23 +40,27 @@ export default class FilterPicker extends Component {
         : []
     } else if (indexTitle === 1) {
       // 方式
-      this.cascade = false
+      // this.cascade = false
+      this.cols = 1
       return filtersData.area ? filtersData.rentType : []
     } else if (indexTitle === 2) {
       // 租金
-      this.cascade = false
+      // this.cascade = false
+      this.cols = 1
       return filtersData.area ? filtersData.price : []
     }
   }
 
   render() {
+    // console.log(this.props.selectedValues[this.props.num])
     return (
       <div className="picker">
         <PickerView
           data={this.PickerViewData()}
-          cascade={this.cascade}
           onChange={this.onChange}
-          onScrollChange={this.onScrollChange}
+          // onScrollChange={this.onScrollChange}
+          value={this.state.value}
+          cols={this.cols}
         />
       </div>
     )

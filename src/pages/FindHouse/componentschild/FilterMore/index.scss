@@ -20,6 +20,7 @@
         flex-wrap: wrap;
         margin-bottom: 15px;
         .flexitem_more {
+          border-radius: 3px;
           border: 1px solid #eee;
           width: 27.33%;
           margin: 5px;
@@ -38,4 +39,9 @@
     position: fixed;
     top: 0px;
   }
+}
+
+.flex_moregaoliang {
+  color: #fff;
+  background-color: #5cc99b;
 }

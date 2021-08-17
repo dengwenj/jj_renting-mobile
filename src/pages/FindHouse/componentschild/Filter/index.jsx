@@ -31,6 +31,13 @@ const titleList = [
   },
 ]
 
+// 显示默认值
+const selectedValues = {
+  0: ['area', 'null'],
+  1: ['null'],
+  2: ['null'],
+  3: [],
+}
 export default class Filter extends Component {
   state = {
     open: false,
@@ -40,6 +47,9 @@ export default class Filter extends Component {
     isShowMore: false,
     selectedSegmentIndex: null,
     filtersData: {},
+    value: null, // FilterPicker 里面的 value
+    num: null, // FilterPicker 里面传的 num 标识
+    selectedValues,
   }
 
   // 挂载完毕调用的钩子
@@ -158,6 +168,18 @@ export default class Filter extends Component {
     })
   }
 
+  // 子传父 FilterPicker
+  filterPicker = (value, num) => {
+    this.setState({
+      value,
+      num,
+      selectedValues: {
+        ...this.state.selectedValues,
+        [num]: value,
+      },
+    })
+  }
+
   render() {
     // 展示内部数据源
     const sidebar = (
@@ -173,7 +195,7 @@ export default class Filter extends Component {
           filterTitle={this.filterTitle}
           gaoLiang={this.gaoLiang}
         />
-        <FilterPicker {...this.state} />
+        <FilterPicker {...this.state} filterPicker={this.filterPicker} />
         <FilterBottom
           qd={'确定'}
           qx={'取消'}
@@ -213,6 +235,7 @@ export default class Filter extends Component {
             onOpenChangeMore={this.onOpenChangeMore}
             zIndex={this.state.zIndex}
             filterGaoLiang={this.filterGaoLiang}
+            filtersData={this.state.filtersData}
           />
         ) : (
           ''
