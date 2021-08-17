@@ -94,7 +94,7 @@ export default class FindHouse extends Component {
         {/* 顶部导航栏 */}
 
         {/* 区域，方式，租金，筛选部分 */}
-        <Sticky>
+        <Sticky height={40}>
           <Filter ref="filterRef" searchHouseList={this.searchHouseList} />
         </Sticky>
         {/* 区域，方式，租金，筛选部分 */}

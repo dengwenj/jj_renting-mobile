@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import './index.scss'
 
 export default function Sticky(props) {
@@ -14,6 +15,9 @@ export default function Sticky(props) {
 
     这里面用的 dom 的方法
   */
+
+  // 这样就 通用了 只需要你 props 传进来就行了 不需要写死了
+  // const { height } = props
 
   // 占位元素
   const placeHolder = useRef()
@@ -31,7 +35,7 @@ export default function Sticky(props) {
     // if (top < 0) {
     //   // 吸顶
     //   contentEl.classList.add('fixed')
-    //   placeHolderEl.style.height = '40px'
+    //   placeHolderEl.style.height = '${height}px'
     //   return
     // }
     // contentEl.classList.remove('fixed')
@@ -54,4 +58,8 @@ export default function Sticky(props) {
       <div ref={content}>{props.children}</div>
     </div>
   )
+}
+
+Sticky.propTypes = {
+  height: PropTypes.number.isRequired,
 }
