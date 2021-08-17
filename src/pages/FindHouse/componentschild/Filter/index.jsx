@@ -122,12 +122,55 @@ export default class Filter extends Component {
   }
 
   // 点击确定
-  qdClick = () => {
-    this.setState({
-      open: false,
-      zIndex: -1,
-      selectedSegmentIndex: this.state.indexTitle,
-    })
+  qdClick = (num, selectedValues) => {
+    this.setState(
+      {
+        open: false,
+        zIndex: -1,
+        selectedSegmentIndex: this.state.indexTitle,
+        selectedValues: {
+          ...this.state.selectedValues,
+          [num]: selectedValues,
+        },
+      },
+      () => {
+        // 因为 用的 React里面的事件 所以更新状态是异步的 在后面的回调函数才拿得到最新的状态
+        /* 
+          组装筛选条件
+              1 在 Filter 组件的 onSave 方法中，根据最新 selectedValues 组装筛选条件 filters
+              2 获取区域数据的参数名，area 或 subway （选中值数组的第一个元素）
+              3 获取区域数据的值（以最后一个 value 为准）
+              4 获取方式和租金的值（选中值的第一个元素）
+              5 获取筛选 （more） 的值（将选中值数组转化为以逗号分隔的字符串）
+        */
+        const { selectedValues } = this.state
+        console.log(selectedValues)
+        let filters = {}
+
+        // 区域
+        const areaKey = selectedValues[0][0]
+        console.log(areaKey)
+        let res = 'null'
+        if (selectedValues[0].length === 3) {
+          res =
+            selectedValues[0][2] !== 'null'
+              ? selectedValues[0][2]
+              : selectedValues[0][1]
+        }
+        filters[areaKey] = res
+
+        // 租金和方式
+        const mode = selectedValues[1][0]
+        filters.mode = mode
+        const price = selectedValues[2][0]
+        filters.price = price
+
+        // 筛选
+        const more = selectedValues[3].join(',')
+        filters.more = more
+        console.log(filters)
+      }
+    )
   }
 
   // 点击取消
@@ -240,6 +283,7 @@ export default class Filter extends Component {
             zIndex={this.state.zIndex}
             filterGaoLiang={this.filterGaoLiang}
             filtersData={this.state.filtersData}
+            qdClick={this.qdClick}
           />
         ) : (
           ''

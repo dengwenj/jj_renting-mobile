@@ -38,7 +38,8 @@ export default class FilterMore extends Component {
        
   */
   // 点击确定
-  qdClick = () => {
+  qClick = () => {
+    this.props.qdClick(3, this.state.selectedValues)
     // 点击确定让筛选那个按钮高亮 还有关闭这个筛选
     // 点击确定按钮了，将当前选中项的值和 type，传递给 Filter 父组件 3, this.state.selectedValues
     this.props.filterGaoLiang(false, -2, 3, this.state.selectedValues)
@@ -129,7 +130,7 @@ export default class FilterMore extends Component {
           qd={'确定'}
           qx={'清除'}
           qxClick={this.qxClick}
-          qdClick={this.qdClick}
+          qdClick={this.qClick}
         />
       </div>
     )
