@@ -5,6 +5,7 @@ import {
   AutoSizer,
   InfiniteLoader,
 } from 'react-virtualized'
+import { Toast } from 'antd-mobile'
 import SearchHeader from '@components/SearchHeader'
 import { getItem } from '@utils/storage'
 import Filter from './componentschild/Filter'
@@ -19,7 +20,7 @@ export default class FindHouse extends Component {
     start: 1, // 页码
     end: 10, // 每页多少条数据
     list: [], // 列表数据
-    count: null, // 总共获取的数据
+    count: 0, // 总共获取的数据
   }
 
   // 挂载完毕调用的钩子
@@ -29,17 +30,24 @@ export default class FindHouse extends Component {
     this.filters = {}
   }
 
+  // 发送请求
   searchHouseList = async (filters) => {
+    Toast.loading('加载中...', 0, null, false)
     this.filters = filters
     const { start, end } = this.state
     filters.start = start
     filters.end = end
     filters.cityId = value
     const res = await getHousesList(filters)
+    Toast.hide()
     this.setState({
       list: res.data.body.list,
       count: res.data.body.count,
     })
+
+    if (this.state.count !== 0) {
+      Toast.info(`共找到${this.state.count}套房源`)
+    }
   }
 
   // 渲染每一行数据的渲染函数
@@ -63,12 +71,16 @@ export default class FindHouse extends Component {
   // 返回值数要是 Promise 对象，并且这个对象应该在数据加载完成时，来调用 resolve 让 Promise 对象的状态变为已完成
   loadMoreRows = ({ startIndex, stopIndex }) => {
     return new Promise(async (resolve, reject) => {
+      // if (this.state.list.length !== 10) {
+      //   Toast.loading('加载中...', 0, null, false)
+      // }
       const res = await getHousesList({
         cityId: value,
         ...this.filters,
         start: startIndex,
         end: stopIndex,
       })
+      // Toast.hide()
       //  合并数据
       this.setState({
         list: [...this.state.list, ...res.data.body.list],
