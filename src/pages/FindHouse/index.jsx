@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List } from 'react-virtualized'
+import { List, WindowScroller, AutoSizer } from 'react-virtualized'
 import SearchHeader from '@components/SearchHeader'
 import { getItem } from '@utils/storage'
 import Filter from './componentschild/Filter'
@@ -66,13 +66,24 @@ export default class FindHouse extends Component {
 
         {/* List 列表 */}
         <div className="house_list">
-          <List
-            width={800}
-            height={300}
-            rowCount={this.state.count ? this.state.count : 0} // List列表项的行数
-            rowHeight={120} // 每一行的高度
-            rowRenderer={this.hosueListItem} // 渲染列表项中的每一行
-          />
+          <WindowScroller>
+            {({ height, isScrolling, scrollTop }) => (
+              <AutoSizer>
+                {({ width }) => (
+                  <List
+                    autoHeight // 设置高度 WindowScroller 最终渲染的列表高度
+                    width={width} // 视口的宽度
+                    height={height} // 视口的高度
+                    rowCount={this.state.count ? this.state.count : 0} // List列表项的行数
+                    rowHeight={120} // 每一行的高度
+                    rowRenderer={this.hosueListItem} // 渲染列表项中的每一行
+                    isScrolling={isScrolling}
+                    scrollTop={scrollTop}
+                  />
+                )}
+              </AutoSizer>
+            )}
+          </WindowScroller>
         </div>
         {/* List 列表 */}
       </div>
