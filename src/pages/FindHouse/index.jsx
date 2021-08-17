@@ -10,6 +10,7 @@ import { getItem } from '@utils/storage'
 import Filter from './componentschild/Filter'
 import { getHousesList } from '@api/house'
 import HosueItem from '@components/HosueItem'
+import Sticky from '@components/Sticky'
 import './index.scss'
 
 const { value } = getItem('jjzf')
@@ -93,7 +94,9 @@ export default class FindHouse extends Component {
         {/* 顶部导航栏 */}
 
         {/* 区域，方式，租金，筛选部分 */}
-        <Filter searchHouseList={this.searchHouseList} />
+        <Sticky>
+          <Filter ref="filterRef" searchHouseList={this.searchHouseList} />
+        </Sticky>
         {/* 区域，方式，租金，筛选部分 */}
 
         {/* List 列表 */}
