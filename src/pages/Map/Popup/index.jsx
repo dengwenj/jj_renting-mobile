@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Modal } from 'antd-mobile'
-import BASE_URL from '@utils/url'
+import HosueItem from '@components/HosueItem'
 import './index.scss'
 
 export default class Popup extends Component {
@@ -10,28 +10,8 @@ export default class Popup extends Component {
   }
   fContent = () => {
     const { content } = this.props
-    return content.map((item) => {
-      return (
-        <div className="content" key={item.houseCode}>
-          <div className="tipian">
-            <img
-              src={content.length === 0 ? '' : BASE_URL + item.houseImg}
-              alt=""
-            />
-          </div>
-          <div className="right">
-            <div className="desc">{item.title}</div>
-            <div className="t">{item.desc}</div>
-            <div className="tags">
-              {item.tags.map((item1) => {
-                return <span key={item1}>{item1}</span>
-              })}
-            </div>
-            <div className="pirce">{item.price}元/月</div>
-          </div>
-        </div>
-      )
-    })
+    // 封装到组件里面去了
+    return <HosueItem content={content} />
   }
   render() {
     const { modal } = this.props
