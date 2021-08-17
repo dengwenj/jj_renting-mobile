@@ -29,4 +29,26 @@
       left: 5px;
     }
   }
+  .house_list {
+    padding: 0 15px;
+    background-color: #fff;
+    .content {
+      margin-top: 10px;
+      border-bottom: 1px solid #eee;
+      padding: 5px 0;
+      .right {
+        margin-left: 10px;
+        .t {
+          margin-top: 6px;
+        }
+        .tags {
+          margin-top: 6px;
+        }
+        .pirce {
+          margin-top: 7px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
 }

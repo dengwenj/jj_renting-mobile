@@ -1,5 +1,6 @@
 import React from 'react'
 import BASE_URL from '@utils/url'
+import PropTypes from 'prop-types'
 import './index.scss'
 
 export default function HosueItem({ content, onClick }) {
@@ -25,4 +26,9 @@ export default function HosueItem({ content, onClick }) {
       </div>
     )
   })
+}
+
+HosueItem.propTypes = {
+  content: PropTypes.array.isRequired,
+  onClick: PropTypes.func,
 }

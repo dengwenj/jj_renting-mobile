@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { List } from 'react-virtualized'
 import SearchHeader from '@components/SearchHeader'
 import { getItem } from '@utils/storage'
 import Filter from './componentschild/Filter'
 import { getHousesList } from '@api/house'
+import HosueItem from '@components/HosueItem'
 import './index.scss'
 
 export default class FindHouse extends Component {
@@ -32,6 +34,18 @@ export default class FindHouse extends Component {
     })
   }
 
+  // 渲染每一行数据的渲染函数
+  // 函数的返回值就表示最终渲染在页面中的内容
+  hosueListItem = ({
+    key, //唯一的 key 值
+    index, // 索引号
+    isScrolling, // 当前项是否正在滚动中
+    isVisible, // 当前项在 list 中是可见的
+    style, // 指定每一行的位置 样式
+  }) => {
+    return <HosueItem key={key} style={style} content={this.state.list} />
+  }
+
   render() {
     const { label } = getItem('jjzf')
     return (
@@ -49,6 +63,18 @@ export default class FindHouse extends Component {
         {/* 区域，方式，租金，筛选部分 */}
         <Filter searchHouseList={this.searchHouseList} />
         {/* 区域，方式，租金，筛选部分 */}
+
+        {/* List 列表 */}
+        <div className="house_list">
+          <List
+            width={800}
+            height={300}
+            rowCount={this.state.count ? this.state.count : 0} // List列表项的行数
+            rowHeight={120} // 每一行的高度
+            rowRenderer={this.hosueListItem} // 渲染列表项中的每一行
+          />
+        </div>
+        {/* List 列表 */}
       </div>
     )
   }
