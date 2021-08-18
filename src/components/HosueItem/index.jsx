@@ -6,7 +6,7 @@ import './index.scss'
 export default function HosueItem({ content, onClick }) {
   return content.map((item, index) => {
     return (
-      <div className="content" key={index}>
+      <div className="content" key={index} onClick={onClick}>
         <div className="tipian">
           <img
             src={content.length === 0 ? '' : BASE_URL + item.houseImg}

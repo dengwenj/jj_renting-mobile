@@ -48,6 +48,7 @@ export default class FindHouse extends Component {
     filters.end = end
     filters.cityId = this.value
     const res = await getHousesList(filters)
+
     Toast.hide()
     this.setState({
       list: res.data.body.list,
@@ -69,7 +70,16 @@ export default class FindHouse extends Component {
     isVisible, // 当前项在 list 中是可见的
     style, // 指定每一行的位置 样式
   }) => {
-    return <HosueItem key={key} style={style} content={this.state.list} />
+    const id = this.state.list[index] ? this.state.list[index].houseCode : ''
+
+    return (
+      <HosueItem
+        key={key}
+        style={style}
+        content={this.state.list}
+        onClick={() => this.props.history.push(`/detail/${id}`)}
+      />
+    )
   }
 
   // 表示每一行数据是否加载完成
