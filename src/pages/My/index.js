@@ -56,13 +56,16 @@ export default class Profile extends Component {
     if (getItem('jjzf_token')) {
       // 有就是登录 就显示登录的我的页面 获取个人资料
       const res = await getUserInfo()
-      const { nickname, avatar } = res.data.body
-      this.setState({
-        userInfo: {
-          nickname: nickname,
-          avatar: BASE_URL + avatar,
-        },
-      })
+      // 有可能 token过期了 判断请求是否成功有没有返回数据
+      if (res.data.status === 200) {
+        const { nickname, avatar } = res.data.body
+        this.setState({
+          userInfo: {
+            nickname: nickname,
+            avatar: BASE_URL + avatar,
+          },
+        })
+      }
     }
   }
 
