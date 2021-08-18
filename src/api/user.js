@@ -17,3 +17,11 @@ export const registe = (data) => {
     data,
   })
 }
+
+// 获取用户的信息资料
+export const getUserInfo = () => {
+  return request({
+    method: 'GET',
+    url: '/user',
+  })
+}
