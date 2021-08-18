@@ -9,6 +9,7 @@ import BASE_URL from '@utils/url'
 import { getHouseDetail } from '@api/house'
 
 import styles from './index.module.css'
+import './index.scss'
 
 // 猜你喜欢
 const recommendHouses = [
@@ -180,7 +181,7 @@ export default class HouseDetail extends Component {
       },
     } = this.state
     return (
-      <div className={styles.root}>
+      <div className={`${styles.root} detail`}>
         {/* 导航栏 */}
         <NavHeader
           className={styles.navHeader}

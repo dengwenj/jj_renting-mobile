@@ -28,7 +28,9 @@
   background-color: transparent;
 }
 
+
 /* 房屋基础信息 */
+
 .info {
   padding: 15px;
   background: #fff;
@@ -53,14 +55,17 @@
   margin-right: 5px;
   line-height: 12px;
 }
+
 .tag1 {
   color: #39becd;
   background: #e1f5f8;
 }
+
 .tag2 {
   color: #3fc28c;
   background: #e1f5ed;
 }
+
 .tag3 {
   color: #5aabfd;
   background: #e6f2ff;
@@ -126,8 +131,7 @@
 }
 
 .mapArrow {
-  background: url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png)
-    no-repeat;
+  background: url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png) no-repeat;
   position: absolute;
   width: 11px;
   height: 10px;

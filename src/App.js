@@ -7,6 +7,8 @@ import Search from './pages/Search'
 import Map from './pages/Map'
 import Rent from './pages/Rent'
 import HouseDetail from './pages/HouseDetail'
+import Login from './pages/Login'
+import Registe from './pages/Registe'
 
 export default function App() {
   return (
@@ -15,6 +17,8 @@ export default function App() {
         {/* 配置路由 */}
         {/* 一级路由 */}
         <Switch>
+          <Route exact path="/registe" component={Registe} />
+          <Route exact path="/login" component={Login} />
           <Route exact path="/detail/:id" component={HouseDetail} />
           <Route exact path="/search" component={Search} />
           <Route exact path="/map" component={Map} />
