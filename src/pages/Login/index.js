@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Flex, WingBlank, WhiteSpace, Toast } from 'antd-mobile'
 import { withFormik } from 'formik'
+import * as Yup from 'yup'
 
 import { Link } from 'react-router-dom'
 
@@ -13,8 +14,8 @@ import { login } from '@api/user'
 import { setItem } from '@utils/storage'
 
 // 验证规则：
-// const REG_UNAME = /^[a-zA-Z_\d]{5,8}$/
-// const REG_PWD = /^[a-zA-Z_\d]{5,12}$/
+const REG_UNAME = /^[a-zA-Z_\d]{5,10}$/
+const REG_PWD = /^[a-zA-Z_\d]{5,12}$/
 
 class Login extends Component {
   /* state = {
@@ -59,7 +60,9 @@ class Login extends Component {
 
   render() {
     // const { username, password } = this.state
-    const { values, handleSubmit, handleChange } = this.props
+    const { values, handleSubmit, handleChange, errors, touched, handleBlur } =
+      this.props
+
     return (
       <div className={styles.root}>
         {/* 顶部导航 */}
@@ -76,10 +79,13 @@ class Login extends Component {
                 placeholder="请输入账号"
                 value={values.username}
                 onChange={handleChange}
+                onBlur={handleBlur}
               />
             </div>
-            {/* 长度为5到8位，只能出现数字、字母、下划线 */}
-            {/* <div className={styles.error}>账号为必填项</div> */}
+            {errors.username && touched.username && (
+              <div className={styles.error}>{errors.username}</div>
+            )}
+
             <div className={styles.formItem}>
               <input
                 className={styles.input}
@@ -88,10 +94,13 @@ class Login extends Component {
                 placeholder="请输入密码"
                 value={values.password}
                 onChange={handleChange}
+                onBlur={handleBlur}
               />
             </div>
-            {/* 长度为5到12位，只能出现数字、字母、下划线 */}
-            {/* <div className={styles.error}>账号为必填项</div> */}
+            {errors.password && touched.password && (
+              <div className={styles.error}>{errors.password}</div>
+            )}
+
             <div className={styles.formSubmit}>
               <button className={styles.submit} type="submit">
                 登 录
@@ -110,6 +119,7 @@ class Login extends Component {
 }
 
 /* 
+基本使用
   1 导入 withFormik，使用 withFormik 高阶组件包裹 Login 组件
   2 为 withFormik 提供配置对象：mapPropsToValues 和 handleSubmit
   3 在 Login 组件中，通过 props 获取到 values（表单元素对象），handleSubmit，handleChange
@@ -120,10 +130,28 @@ class Login extends Component {
   7 在 handleSubmit 中，完成登录逻辑
 */
 
+/* 
+表单验证
+  1 在 withFormik 中添加配置项 validationSchema，使用 Yup 添加表单验证规则
+  2 在 Login 组件中，通过 props 获取到 errors（错误信息）和 touched（是否访问过，注意：需要给表单元素添加（是否访问过，注意：需要给表单元素添加 handleBlur 处理失焦点事件才生效）
+  3 在表单元素中通过这两个对象展示表单校验错误信息
+*/
+
 // withFormik 是个高阶组件
 export default withFormik({
   // 提供的状态 为表单元素提供状态
   mapPropsToValues: () => ({ username: '', password: '' }),
+
+  // 表单验证
+  validationSchema: Yup.object().shape({
+    username: Yup.string()
+      .required('账号为必填项')
+      .matches(REG_UNAME, '长度为5到10位，只能出现数字、字母、下划线 '),
+    password: Yup.string()
+      .required('密码为必填项')
+      .matches(REG_PWD, '长度为5到12位，只能出现数字、字母、下划线 '),
+  }),
+
   // 提供的方法 表单的提交事件
   handleSubmit: async (values, { props }) => {
     console.log(values)
