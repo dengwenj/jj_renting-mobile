@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Flex, WingBlank, WhiteSpace, Toast } from 'antd-mobile'
-import { withFormik } from 'formik'
+import { withFormik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 
 import { Link } from 'react-router-dom'
@@ -58,11 +58,15 @@ class Login extends Component {
     Toast.info('账号或者密码错误')
   } */
 
-  render() {
-    // const { username, password } = this.state
-    const { values, handleSubmit, handleChange, errors, touched, handleBlur } =
-      this.props
+  /* 
+    简化表单处理
+      1 导入 Form 组件，替换 form 元素，去掉 onSubmit
+      2 导入 Field 组件，替换 input 表单元素，去掉 onChange、onBlur、value
+      3 导入 ErrorMessage 组件，替换原来的错误消息逻辑代码
+      4 去掉所有 props
+  */
 
+  render() {
     return (
       <div className={styles.root}>
         {/* 顶部导航 */}
@@ -71,42 +75,40 @@ class Login extends Component {
 
         {/* 登录表单 */}
         <WingBlank>
-          <form onSubmit={handleSubmit}>
+          <Form>
             <div className={styles.formItem}>
-              <input
+              <Field
                 className={styles.input}
                 name="username"
                 placeholder="请输入账号"
-                value={values.username}
-                onChange={handleChange}
-                onBlur={handleBlur}
               />
             </div>
-            {errors.username && touched.username && (
-              <div className={styles.error}>{errors.username}</div>
-            )}
+            <ErrorMessage
+              className={styles.error}
+              component="div"
+              name="username"
+            />
 
             <div className={styles.formItem}>
-              <input
+              <Field
                 className={styles.input}
                 name="password"
                 type="password"
                 placeholder="请输入密码"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
               />
             </div>
-            {errors.password && touched.password && (
-              <div className={styles.error}>{errors.password}</div>
-            )}
+            <ErrorMessage
+              className={styles.error}
+              component="div"
+              name="password"
+            />
 
             <div className={styles.formSubmit}>
               <button className={styles.submit} type="submit">
                 登 录
               </button>
             </div>
-          </form>
+          </Form>
           <Flex className={styles.backHome}>
             <Flex.Item>
               <Link to="/registe">还没有账号，去注册~</Link>
