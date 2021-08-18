@@ -13,9 +13,9 @@ import { getHousesList } from '@api/house'
 import HosueItem from '@components/HosueItem'
 import Sticky from '@components/Sticky'
 import NotHouse from '@components/NotHouse'
+import getCurrentCity from '@utils/currentCity'
 import './index.scss'
 
-const { value } = getItem('jjzf')
 export default class FindHouse extends Component {
   state = {
     start: 1, // 页码
@@ -26,7 +26,11 @@ export default class FindHouse extends Component {
   }
 
   // 挂载完毕调用的钩子
-  componentDidMount() {
+  async componentDidMount() {
+    const { label, value } = await getCurrentCity()
+    this.label = label
+    this.value = value
+
     // 调用 searchHouseList 获取数据
     this.searchHouseList({})
     this.filters = {}
@@ -42,7 +46,7 @@ export default class FindHouse extends Component {
     const { start, end } = this.state
     filters.start = start
     filters.end = end
-    filters.cityId = value
+    filters.cityId = this.value
     const res = await getHousesList(filters)
     Toast.hide()
     this.setState({
@@ -79,7 +83,7 @@ export default class FindHouse extends Component {
     return new Promise(async (resolve, reject) => {
       Toast.loading('加载中...', 0, null, false)
       const res = await getHousesList({
-        cityId: value,
+        cityId: this.value,
         ...this.filters,
         start: startIndex,
         end: stopIndex,
