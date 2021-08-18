@@ -1,0 +1,17 @@
+.not_found {
+  background-color: #f4f4f4;
+  height: 100%;
+  margin-top: 100px;
+  text-align: center;
+  .img {
+    img {
+      width: 140px;
+      height: 80px;
+    }
+  }
+  .msg {
+    color: #333;
+    margin-top: 5px;
+    font-size: 13px;
+  }
+}
