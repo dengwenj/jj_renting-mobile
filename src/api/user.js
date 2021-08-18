@@ -25,3 +25,11 @@ export const getUserInfo = () => {
     url: '/user',
   })
 }
+
+// 用户退出
+export const userLogout = () => {
+  return request({
+    method: 'POST',
+    url: '/user/logout',
+  })
+}

@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 
 import { Link } from 'react-router-dom'
-import { Grid, Button } from 'antd-mobile'
+import { Grid, Button, Modal } from 'antd-mobile'
 
 import BASE_URL from '@utils/url'
-import { getItem } from '@utils/storage'
+import { getItem, removeItem } from '@utils/storage'
 
-import { getUserInfo } from '@api/user'
+import { getUserInfo, userLogout } from '@api/user'
 
 import styles from './index.module.css'
+
+const alert = Modal.alert
 
 // 菜单数据
 const menus = [
@@ -39,7 +41,7 @@ export default class Profile extends Component {
 
   state = {
     userInfo: {
-      nickname: '' || '游客',
+      nickname: '',
       avatar: '' || BASE_URL + '/img/profile/avatar.png',
     },
   }
@@ -51,12 +53,38 @@ export default class Profile extends Component {
 
   // 用户是否有 token
   userToken = async () => {
-    console.log(getItem('jjzf_token'))
     if (getItem('jjzf_token')) {
       // 有就是登录 就显示登录的我的页面 获取个人资料
       const res = await getUserInfo()
-      console.log(res)
+      const { nickname, avatar } = res.data.body
+      this.setState({
+        userInfo: {
+          nickname: nickname,
+          avatar: BASE_URL + avatar,
+        },
+      })
     }
+  }
+
+  // 退出功能
+  logout = () => {
+    //  确定退出 删除 本地存储中的 token 值 更新状态
+    alert('提示', '确定退出吗？', [
+      { text: '取消', onPress: () => {} },
+      {
+        text: '确定',
+        onPress: async () => {
+          removeItem('jjzf_token')
+          await userLogout()
+          this.setState({
+            userInfo: {
+              nickname: '',
+              avatar: '' || BASE_URL + '/img/profile/avatar.png',
+            },
+          })
+        },
+      },
+    ])
   }
 
   render() {
@@ -81,29 +109,31 @@ export default class Profile extends Component {
             <div className={styles.user}>
               <div className={styles.name}>{nickname || '游客'}</div>
               {/* 登录后展示： */}
-              {/* <>
-                <div className={styles.auth}>
-                  <span onClick={this.logout}>退出</span>
-                </div>
+              {getItem('jjzf_token') ? (
+                <>
+                  <div className={styles.auth}>
+                    <span onClick={this.logout}>退出</span>
+                  </div>
+                  <div className={styles.edit}>
+                    编辑个人资料
+                    <span className={styles.arrow}>
+                      <i className="iconfont icon-arrow" />
+                    </span>
+                  </div>
+                </>
+              ) : (
+                // 未登录
                 <div className={styles.edit}>
-                  编辑个人资料
-                  <span className={styles.arrow}>
-                    <i className="iconfont icon-arrow" />
-                  </span>
+                  <Button
+                    type="primary"
+                    size="small"
+                    inline
+                    onClick={() => history.push('/login')}
+                  >
+                    去登录
+                  </Button>
                 </div>
-              </> */}
-
-              {/* 未登录展示： */}
-              <div className={styles.edit}>
-                <Button
-                  type="primary"
-                  size="small"
-                  inline
-                  onClick={() => history.push('/login')}
-                >
-                  去登录
-                </Button>
-              </div>
+              )}
             </div>
           </div>
         </div>
