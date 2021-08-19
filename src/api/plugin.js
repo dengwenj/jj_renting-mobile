@@ -1,7 +1,7 @@
 import request from '@utils/request'
 
 // 房屋图像上传
-export const houseImg = (data) => {
+export const img = (data) => {
   return request({
     method: 'POST',
     url: '/houses/image',

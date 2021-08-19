@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 
 import { Link } from 'react-router-dom'
 
-import BASE_URL from '@utils/url'
-
 import { fabuHouse } from '@api/user'
 
 import NavHeader from '@components/NavHeader'
@@ -47,13 +45,14 @@ export default class Rent extends Component {
     return list.map((item) => {
       return (
         <HouseItem
+          content={list}
           key={item.houseCode}
           onClick={() => history.push(`/detail/${item.houseCode}`)}
-          src={BASE_URL + item.houseImg}
-          title={item.title}
-          desc={item.desc}
-          tags={item.tags}
-          price={item.price}
+          // src={BASE_URL + item.houseImg}
+          // title={item.title}
+          // desc={item.desc}
+          // tags={item.tags}
+          // price={item.price}
         />
       )
     })

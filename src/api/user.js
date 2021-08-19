@@ -59,9 +59,17 @@ export const removeFavorites = (id) => {
 }
 
 // 查看已发布房源列表
-export const fabuHouse = (data) => {
+export const fabuHouse = () => {
   return request({
     method: 'GET',
+    url: '/user/houses',
+  })
+}
+
+// 发布房源
+export const releaseHouse = (data) => {
+  return request({
+    method: 'POST',
     url: '/user/houses',
     data,
   })

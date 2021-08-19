@@ -8,12 +8,14 @@ import {
   ImagePicker,
   TextareaItem,
   Modal,
+  Toast,
 } from 'antd-mobile'
 
 import NavHeader from '@components/NavHeader'
 import HousePackge from '@components/HousePackage'
 
-import { houseImg } from '@api/plugin'
+import { img } from '@api/plugin'
+import { releaseHouse } from '@api/user'
 
 import styles from './index.module.css'
 
@@ -150,15 +152,52 @@ export default class RentAdd extends Component {
         7 通过接口返回值获取到的图片路径
   */
   addHouse = async () => {
-    const { tempSlides } = this.state
-    let img = ''
+    const {
+      tempSlides,
+      title,
+      description,
+      oriented,
+      supporting,
+      price,
+      roomType,
+      size,
+      floor,
+      community: { id },
+    } = this.state
+    let imgs = ''
     if (tempSlides.length > 0) {
       const form = new FormData()
       tempSlides.forEach((item) => form.append('file', item.file))
-      const res = await houseImg(form)
-      img = res.data.body.join('|')
+      const res = await img(form)
+      imgs = res.data.body.join('|')
     }
-    console.log(img)
+    this.setState(
+      {
+        houseImg: imgs,
+      },
+      async () => {
+        const data = {
+          title,
+          description,
+          houseImg: this.state.houseImg,
+          oriented,
+          supporting,
+          price,
+          roomType,
+          size,
+          floor,
+          community: id,
+        }
+        console.log(data)
+        const res = await releaseHouse(data)
+        if (res.data.status === 200) {
+          Toast.success('发布成功')
+          this.props.history.push('/rent')
+        } else {
+          Toast.info('网络缓慢，请稍后重试')
+        }
+      }
+    )
   }
 
   render() {
