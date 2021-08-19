@@ -117,6 +117,19 @@ export default class RentAdd extends Component {
     })
   }
 
+  /* 
+    获取房屋配置数据
+        1 给 HousePackage 组件添加 onSelect 属性
+        2 在 onSelect 处理方法中，通过参数获取到当前选中项的值
+        3 根据发布房源接口的参数说明，将获取到的数组类型的选中值，转化为字符串类型
+        4 调用 setState() 更新状态
+  */
+  handleSupporting = (value) => {
+    this.setState({
+      supporting: value.join('|'),
+    })
+  }
+
   render() {
     const Item = List.Item
     const { history } = this.props
@@ -225,7 +238,7 @@ export default class RentAdd extends Component {
           renderHeader={() => '房屋配置'}
           data-role="rent-list"
         >
-          <HousePackge select />
+          <HousePackge select onSelect={this.handleSupporting} />
         </List>
 
         <List
