@@ -156,7 +156,6 @@ export default withFormik({
 
   // 提供的方法 表单的提交事件
   handleSubmit: async (values, { props }) => {
-    console.log(values)
     const { username, password } = values
     const res = await login({
       username,
@@ -168,7 +167,17 @@ export default withFormik({
     if (status === 200) {
       // 说明登录通过
       setItem('jjzf_token', res.data.body.token)
-      props.history.replace('/my')
+
+      /* 
+         修改登录成功跳转
+             1 登录成功后，判断是否需要跳转到用户要想访问的页面（判断 props.location.state 是否有值）
+             2 如果不需要（没有值）则直接调用 history.go(-1) 返回上一页
+             3 如果需要，就跳转到 from.pathname 指定的页面（推荐使用 replace）
+      */
+      if (props.location.state)
+        return props.history.replace(props.location.state.from.pathname)
+      props.history.replace('/my') // 没有值
+
       Toast.success('登录成功', 2)
       return
     }
