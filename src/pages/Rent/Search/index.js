@@ -23,7 +23,11 @@ export default class Search extends Component {
     const { tipsList } = this.state
 
     return tipsList.map((item) => (
-      <li key={item.community} className={styles.tip}>
+      <li
+        key={item.community}
+        className={styles.tip}
+        onClick={this.tipsClick(item)}
+      >
         {item.communityName}
       </li>
     ))
@@ -60,6 +64,16 @@ export default class Search extends Component {
     this.setState({
       tipsList: [],
     })
+  }
+
+  // 点击每一项
+  tipsClick = (item) => {
+    return () => {
+      this.props.history.push('/rent/add', {
+        name: item.communityName,
+        id: item.community,
+      })
+    }
   }
 
   render() {

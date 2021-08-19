@@ -79,6 +79,18 @@ export default class RentAdd extends Component {
     }
   }
 
+  componentDidMount() {
+    // 判断 this.props.location.state 是否为空 为空就不做任何处理
+    // 不为空更新状态
+    const { state } = this.props.location
+    if (state) {
+      const community = state
+      this.setState({
+        community,
+      })
+    }
+  }
+
   // 取消编辑，返回上一页
   onCancel = () => {
     alert('提示', '放弃发布房源?', [
