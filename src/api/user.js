@@ -57,3 +57,12 @@ export const removeFavorites = (id) => {
     url: `/user/favorites/${id}`,
   })
 }
+
+// 查看已发布房源列表
+export const fabuHouse = (data) => {
+  return request({
+    method: 'GET',
+    url: '/user/houses',
+    data,
+  })
+}

@@ -202,7 +202,6 @@ export default class HouseDetail extends Component {
 
   // 点击收藏
   handleFavorite = async () => {
-    console.log(this.props.location)
     const { id } = this.props.match.params
     // 判断是否登录
     if (getItem('jjzf_token')) {
