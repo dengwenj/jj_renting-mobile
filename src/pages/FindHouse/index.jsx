@@ -91,14 +91,14 @@ export default class FindHouse extends Component {
   // 返回值数要是 Promise 对象，并且这个对象应该在数据加载完成时，来调用 resolve 让 Promise 对象的状态变为已完成
   loadMoreRows = ({ startIndex, stopIndex }) => {
     return new Promise(async (resolve, reject) => {
-      Toast.loading('加载中...', 0, null, false)
+      // Toast.loading('加载中...', 0, null, false)
       const res = await getHousesList({
         cityId: this.value,
         ...this.filters,
         start: startIndex,
         end: stopIndex,
       })
-      Toast.hide()
+      // Toast.hide()
       //  合并数据
       this.setState({
         list: [...this.state.list, ...res.data.body.list],

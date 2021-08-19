@@ -38,3 +38,15 @@ export const getHouseData = (id) => {
     },
   })
 }
+
+// 小区关键词查询 /area/community
+export const communitySearch = (name, id) => {
+  return request({
+    method: 'GET',
+    url: '/area/community',
+    params: {
+      name,
+      id,
+    },
+  })
+}
