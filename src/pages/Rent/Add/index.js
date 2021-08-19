@@ -171,33 +171,25 @@ export default class RentAdd extends Component {
       const res = await img(form)
       imgs = res.data.body.join('|')
     }
-    this.setState(
-      {
-        houseImg: imgs,
-      },
-      async () => {
-        const data = {
-          title,
-          description,
-          houseImg: this.state.houseImg,
-          oriented,
-          supporting,
-          price,
-          roomType,
-          size,
-          floor,
-          community: id,
-        }
-        console.log(data)
-        const res = await releaseHouse(data)
-        if (res.data.status === 200) {
-          Toast.success('发布成功')
-          this.props.history.push('/rent')
-        } else {
-          Toast.info('网络缓慢，请稍后重试')
-        }
-      }
-    )
+    const data = {
+      title,
+      description,
+      houseImg: imgs,
+      oriented,
+      supporting,
+      price,
+      roomType,
+      size,
+      floor,
+      community: id,
+    }
+    const res = await releaseHouse(data)
+    if (res.data.status === 200) {
+      Toast.success('发布成功')
+      this.props.history.push('/rent')
+    } else {
+      Toast.info('网络缓慢，请稍后重试')
+    }
   }
 
   render() {
