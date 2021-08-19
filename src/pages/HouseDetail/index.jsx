@@ -7,6 +7,8 @@ import HouseItem from '@components/HosueItem'
 import HousePackage from '@components/HousePackage'
 import BASE_URL from '@utils/url'
 import { getHouseDetail } from '@api/house'
+import { houseFavorites } from '@api/user'
+import { getItem } from '@utils/storage'
 
 import styles from './index.module.css'
 import './index.scss'
@@ -94,10 +96,41 @@ export default class HouseDetail extends Component {
       // 房屋描述
       description: '',
     },
+
+    isFavorite: false,
   }
+
+  /* 
+     检查房源是否收藏
+         1 在 state 中添加状态 isFavorite（表示是否收藏），默认为 false
+         2 创建方法 checkFavorite，在进入房源详情页面时调用该方法
+         3 先判断是否登录
+         4 如果未登录，直接 return，不再检查是否收藏
+         5 如果已登录，从路由参数中，获取到当前房屋 id
+         6 使用接口，查询该房源是否收藏
+         7 如果返回状态码为200，就更新 isFavorite 否则，不做任何处理
+         8 在页面结构中，通过状态 isFavorite 修改收藏按钮的文字和图片内容
+  */
 
   componentDidMount() {
     this._getHouseDetail()
+    this._houseFavorites()
+  }
+
+  // 是否收藏
+  _houseFavorites = async () => {
+    const { id } = this.props.match.params
+
+    if (getItem('jjzf_token')) {
+      // 没有登录就不做任何操作 登录了就发送请求 更新状态 isFavorite
+      const res = await houseFavorites(id)
+      if (res.data.status === 200) {
+        const { isFavorite } = res.data.body
+        this.setState({
+          isFavorite,
+        })
+      }
+    }
   }
 
   // 发送请求
@@ -318,11 +351,19 @@ export default class HouseDetail extends Component {
         <Flex className={styles.fixedBottom}>
           <Flex.Item>
             <img
-              src={BASE_URL + '/img/unstar.png'}
-              className={styles.favoriteImg}
+              src={
+                BASE_URL +
+                (this.state.isFavorite ? '/img/star.png' : '/img/unstar.png')
+              }
+              className={`${styles.favoriteImg} `}
+              style={{
+                color: 'red',
+              }}
               alt="收藏"
             />
-            <span className={styles.favorite}>收藏</span>
+            <span className={styles.favorite}>
+              {this.state.isFavorite ? '已收藏' : '收藏'}
+            </span>
           </Flex.Item>
           <Flex.Item>在线咨询</Flex.Item>
           <Flex.Item>

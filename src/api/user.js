@@ -33,3 +33,11 @@ export const userLogout = () => {
     url: '/user/logout',
   })
 }
+
+// 房屋是否收藏 /user/favorites/{id}
+export const houseFavorites = (id) => {
+  return request({
+    method: 'GET',
+    url: `/user/favorites/${id}`,
+  })
+}
