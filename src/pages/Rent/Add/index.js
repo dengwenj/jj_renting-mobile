@@ -13,6 +13,8 @@ import {
 import NavHeader from '@components/NavHeader'
 import HousePackge from '@components/HousePackage'
 
+import { houseImg } from '@api/plugin'
+
 import styles from './index.module.css'
 
 const alert = Modal.alert
@@ -130,6 +132,35 @@ export default class RentAdd extends Component {
     })
   }
 
+  // 获取房屋图片
+  handleImagePicker = (files) => {
+    this.setState({
+      tempSlides: files,
+    })
+  }
+
+  /* 
+    上传房屋图片
+        1 给提交按钮，绑定单击事件
+        2 在事件处理程序中，判断是否有房屋图片
+        3 如果没有不做任何处理
+        4 如果有，就创建 FormData 的实例对象(form)
+        5 遍历 tempSlides 数组，分别将每一个图片对象，添加到 form 中（键为：file，根据接口文档获得）
+        6 调用图片上传接口，传递 form 参数，并设置请求头 Content-type 为 multipart/form-data
+        7 通过接口返回值获取到的图片路径
+  */
+  addHouse = async () => {
+    const { tempSlides } = this.state
+    let img = ''
+    if (tempSlides.length > 0) {
+      const form = new FormData()
+      tempSlides.forEach((item) => form.append('file', item.file))
+      const res = await houseImg(form)
+      img = res.data.body.join('|')
+    }
+    console.log(img)
+  }
+
   render() {
     const Item = List.Item
     const { history } = this.props
@@ -230,6 +261,7 @@ export default class RentAdd extends Component {
             files={tempSlides}
             multiple={true}
             className={styles.imgpicker}
+            onChange={this.handleImagePicker}
           />
         </List>
 
