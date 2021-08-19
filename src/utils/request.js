@@ -1,6 +1,6 @@
 import axios from 'axios'
 import BASE_URL from './url'
-import { getItem } from '@utils/storage'
+import { getItem, removeItem } from '@utils/storage'
 
 const request = axios.create({
   baseURL: BASE_URL,
@@ -24,6 +24,10 @@ request.interceptors.request.use(
 // 响应拦截器
 request.interceptors.response.use(
   function (response) {
+    const { status } = response.data
+    if (status === 400) {
+      removeItem('jjzf_token')
+    }
     return response
   },
   function (error) {

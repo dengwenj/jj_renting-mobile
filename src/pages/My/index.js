@@ -65,6 +65,14 @@ export default class Profile extends Component {
             avatar: BASE_URL + avatar,
           },
         })
+      } else {
+        // token 失效的情况，这种情况下，应该重新更新页面
+        this.setState({
+          userInfo: {
+            nickname: '',
+            avatar: '' || BASE_URL + '/img/profile/avatar.png',
+          },
+        })
       }
     }
   }
