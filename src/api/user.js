@@ -41,3 +41,19 @@ export const houseFavorites = (id) => {
     url: `/user/favorites/${id}`,
   })
 }
+
+// 添加收藏
+export const addFavorites = (id) => {
+  return request({
+    method: 'POST',
+    url: `/user/favorites/${id}`,
+  })
+}
+
+// 删除收藏
+export const removeFavorites = (id) => {
+  return request({
+    method: 'DELETE',
+    url: `/user/favorites/${id}`,
+  })
+}

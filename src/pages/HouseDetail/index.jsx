@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 
-import { Carousel, Flex } from 'antd-mobile'
+import { Carousel, Flex, Modal } from 'antd-mobile'
 
 import NavHeader from '@components/NavHeader'
 import HouseItem from '@components/HosueItem'
 import HousePackage from '@components/HousePackage'
 import BASE_URL from '@utils/url'
 import { getHouseDetail } from '@api/house'
-import { houseFavorites } from '@api/user'
+import { houseFavorites, addFavorites, removeFavorites } from '@api/user'
 import { getItem } from '@utils/storage'
 
 import styles from './index.module.css'
 import './index.scss'
+
+const alert = Modal.alert
 
 // 猜你喜欢
 const recommendHouses = [
@@ -97,6 +99,7 @@ export default class HouseDetail extends Component {
       description: '',
     },
 
+    // 是否收藏
     isFavorite: false,
   }
 
@@ -195,6 +198,51 @@ export default class HouseDetail extends Component {
       <div class="${styles.mapArrow}"></div>
     `)
     map.addOverlay(label)
+  }
+
+  // 点击收藏
+  handleFavorite = async () => {
+    console.log(this.props.location)
+    const { id } = this.props.match.params
+    // 判断是否登录
+    if (getItem('jjzf_token')) {
+      // 发送请求收藏房源 或者 取消收藏房源
+      // 判断 isFavorite 为 true 还是 false true 就是添加过收藏的 false 就是没有
+      if (this.state.isFavorite) {
+        // 添加过收藏的 这里就要删除收藏
+        const res = await removeFavorites(id)
+        if (res.data.status === 200) {
+          // 更新状态
+          this.setState({
+            isFavorite: false,
+          })
+        }
+        return
+      }
+      // 走这里来了说明没有收藏过 就发送请求收藏
+      const res = await addFavorites(id)
+      // 更新状态
+      if (res.data.status === 200) {
+        // 更新状态
+        this.setState({
+          isFavorite: true,
+        })
+      }
+      return
+    }
+    // 到这里来了说明没有登录弹出对话框就跳转到登录页面
+    alert('提示', '收藏房源需要登录，是否登录？', [
+      { text: '取消', onPress: () => {} },
+      {
+        text: '确定',
+        onPress: () => {
+          // 点击确定跳转到登录页面
+          this.props.history.push('/login', {
+            from: this.props.location,
+          })
+        },
+      },
+    ])
   }
 
   render() {
@@ -349,7 +397,7 @@ export default class HouseDetail extends Component {
 
         {/* 底部收藏按钮 */}
         <Flex className={styles.fixedBottom}>
-          <Flex.Item>
+          <Flex.Item onClick={this.handleFavorite}>
             <img
               src={
                 BASE_URL +

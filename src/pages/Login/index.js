@@ -156,6 +156,7 @@ export default withFormik({
 
   // 提供的方法 表单的提交事件
   handleSubmit: async (values, { props }) => {
+    console.log(props)
     const { username, password } = values
     const res = await login({
       username,
@@ -176,7 +177,7 @@ export default withFormik({
       */
       if (props.location.state)
         return props.history.replace(props.location.state.from.pathname)
-      props.history.replace('/my') // 没有值
+      props.history.goBack() // 没有值
 
       Toast.success('登录成功', 2)
       return
